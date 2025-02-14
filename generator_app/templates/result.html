@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Generator Postaci WFRP</title>
+    <!-- Bootstrap 4 CSS -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1c1c1c;  /* Ciemne tło */
+            color: #eaeaea;             /* Jasny tekst */
+        }
+        h1 {
+            color: #d11a2a;             /* Krwista czerwień */
+            font-family: 'Georgia', serif;
+            text-shadow: 2px 2px #000;
+        }
+        .form-check-label {
+            color: #eaeaea;
+        }
+        .form-check-input:checked + .form-check-label {
+            color: #ff6f00;             /* Ognisty pomarańcz */
+        }
+        .btn-primary {
+            background-color: #d11a2a;  /* Krwista czerwień */
+            border-color: #a31420;
+        }
+        .btn-primary:hover {
+            background-color: #ff6f00;  /* Ognisty pomarańcz */
+            border-color: #d35400;
+        }
+    </style>
 </head>
 <body>
+    <div class="container mt-5">
+        <h1 class="text-center">{{postac_}}</h1>
 
+    </div>
+
+    <!-- Bootstrap 4 JS + jQuery + Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
 </body>
 </html>
