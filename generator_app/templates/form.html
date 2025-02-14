@@ -32,14 +32,49 @@
             background-color: #ff6f00;  /* Ognisty pomarańcz */
             border-color: #d35400;
         }
+        .short-input {
+            width: 250px;  /* Skrócone pole tekstowe dla imienia */
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">W imię Sigmara!</h1>
+        <h1 class="text-left">W imię Sigmara!</h1>
         <form method="post">
             {{ form.hidden_tag() }}
 
+            <!-- Imię i Płeć na jednej linii, bliżej siebie -->
+            <div class="form-row align-items-end">
+                <!-- Imię -->
+                <div class="form-group mb-0">
+                    <label for="{{ form.name.id }}">{{ form.name.label }}</label>
+                    {{ form.name(class="form-control short-input", placeholder="Podaj imię") }}
+                    {% if form.name.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Płeć -->
+                <div class="form-group ml-3 mb-0">
+                    <label>{{ form.sex.label }}</label>
+                    <div>
+                        {% for subfield in form.sex %}
+                            <div class="form-check form-check-inline">
+                                {{ subfield(class="form-check-input") }}
+                                <label class="form-check-label" for="{{ subfield.id }}">
+                                    {{ subfield.label.text }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wybór rasy -->
             <div class="form-group">
                 <label>{{ form.race.label }}</label>
                 <div>

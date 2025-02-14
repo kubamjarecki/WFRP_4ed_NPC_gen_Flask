@@ -17,7 +17,10 @@ class CreationForm(FlaskForm):
     race = RadioField('Wybierz rasę',
                       choices= race_choices,
                       default= 'Losowo')
-    #name = StringField('Imię', validators=[DataRequired()])
+    name = StringField('Imię')
+    sex = RadioField('Wybierz płeć',
+                     choices=[('Mężczyzna', 'Mężczyzna'), ('Kobieta', 'Kobieta')],
+                     default='M')
 
 
 
