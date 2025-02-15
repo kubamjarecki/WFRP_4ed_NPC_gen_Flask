@@ -9,6 +9,7 @@ class Postac:
 
     def generate_postac(self):
 
+
         if self.race == "Losowo":
             K100 = random.randint(1, 100)
             lesny = [100]
@@ -30,23 +31,23 @@ class Postac:
         ###########################################
         if self.race == "Wysoki elf":
             from rasy.wysoki_elf import cechy, szybkosc, punkty_bohatera0, punkty_przeznaczenia0, \
-                punkty_wolne, profesje, umiejki, talentyx, wzrost, imiex_m, imiex_z, wlosy, oczy
+                punkty_wolne, profesje, umiejki, talentyx, wzrost, losowanie_imienia, wlosy, oczy
             nazwa = self.race
         if self.race == "Leśny elf":
             from rasy.lesny_elf import cechy, szybkosc, punkty_bohatera0, punkty_przeznaczenia0, \
-                punkty_wolne, profesje, umiejki, talentyx, wzrost, imiex_m, imiex_z, wlosy, oczy
+                punkty_wolne, profesje, umiejki, talentyx, wzrost, losowanie_imienia, wlosy, oczy
             nazwa = self.race
         if self.race == "Krasnolud":
             from rasy.khazad import cechy, szybkosc, punkty_bohatera0, punkty_przeznaczenia0, \
-                punkty_wolne, profesje, umiejki, talentyx, wzrost, imiex_m, imiex_z, wlosy, oczy
+                punkty_wolne, profesje, umiejki, talentyx, wzrost, losowanie_imienia, wlosy, oczy
             nazwa = self.race
         if self.race == "Niziołek":
             from rasy.hobbit import cechy, szybkosc, punkty_bohatera0, punkty_przeznaczenia0, \
-                punkty_wolne, profesje, umiejki, talentyx, wzrost, imiex_m, imiex_z, wlosy, oczy
+                punkty_wolne, profesje, umiejki, talentyx, wzrost, losowanie_imienia, wlosy, oczy
             nazwa = self.race
         if self.race == "Człowiek":
             from rasy.czlowiek import cechy, szybkosc, punkty_bohatera0, punkty_przeznaczenia0, \
-                punkty_wolne, profesje, umiejki, talentyx, wzrost, imiex_m, imiex_z, wlosy, oczy
+                punkty_wolne, profesje, umiejki, talentyx, wzrost,  losowanie_imienia, wlosy, oczy
             nazwa = self.race
         #self.race_traits =RaceTraits(nazwa = nazwa, cechy = cechy, sz = szybkosc, pb = punkty_bohatera0, pp = punkty_przeznaczenia0, p0 = punkty_wolne, profesje = profesje, umiejki = umiejki, talenty=talentyx, wzrost=wzrost, imiex_m=imiex_m, imiex_z=imiex_z, wlosy = wlosy, oczy=oczy )
         ################################
@@ -54,10 +55,8 @@ class Postac:
         ################################
 
         if self.name == "":
-            if self.sex == "Kobieta":
-                self.name = imiex_z
-            if self.sex == "Mężczyzna":
-                self.name = imiex_m
+            self.name = losowanie_imienia(self.sex)
             
 
         return f"Twoja {self.sex} to {self.race}, a imię {self.name}"
+

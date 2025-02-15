@@ -58,6 +58,34 @@ imiona_m = ["Alarik", "Alrik", "Argat", "Argorn", "Arngrim", "Azram", "Azrel", "
 
 imiona_z = ["Akre", "Ametrin", "Amma", "Angeya", " Angrboda", " Ankharma", " Anvila", " Arka", " Arrica", " Athrina", " Atla", " Aurboda", " Ayla", " Azlana", " Azraya", " Bestla", " Beyla", " Blid", " Boria", " Daina", " Dalla", " Danra", " Diara", " Drumba", " Dunerka", " Edria", " Eistla", " Erna", " Eudora", " Farmira", " Fulla", " Gael", " Gasta", " Gilderia", " Grella", " Helgar", " Hilga", " Jaheira", 
 "Janara", " Jarnsaksa", " Jorika", " Kamira", " Kathara", " Keira", " Keri", " Krina", " Layfeja", " Magda", " Margara", " Meili", " Meure", " Modira", " Myrtha", " Oria", " Renfri", " Rhizma", " Rigunta", " Runa", " Serewassa", " Siri", " Sylga", " Teria", " Terigne", " Tesela", " Tessa", " Thera", " Therla", " Titta", " Ulfrun", " Ulla", " Umina", " Valaya", " Vanirka", " Varna", " Vigaya"]
+
+
+def  losowanie_imienia(string):
+    if string == "Kobieta":
+        lista = ["Akre", "Ametrin", "Amma", "Angeya", " Angrboda", " Ankharma", " Anvila", " Arka", " Arrica", " Athrina", " Atla", " Aurboda", " Ayla", " Azlana", " Azraya", " Bestla", " Beyla", " Blid", " Boria", " Daina", " Dalla", " Danra", " Diara", " Drumba", " Dunerka", " Edria", " Eistla", " Erna", " Eudora", " Farmira", " Fulla", " Gael", " Gasta", " Gilderia", " Grella", " Helgar", " Hilga", " Jaheira",
+                    "Janara", " Jarnsaksa", " Jorika", " Kamira", " Kathara", " Keira", " Keri", " Krina", " Layfeja", " Magda", " Margara", " Meili", " Meure", " Modira", " Myrtha", " Oria", " Renfri", " Rhizma", " Rigunta", " Runa", " Serewassa", " Siri", " Sylga", " Teria", " Terigne", " Tesela", " Tessa", " Thera", " Therla", " Titta", " Ulfrun", " Ulla", " Umina", " Valaya", " Vanirka", " Varna", " Vigaya"]
+
+    if string == "Mężczyzna":
+        lista = ["Alarik", "Alrik", "Argat", "Argorn", "Arngrim", "Azram", "Azrel", "Bafur", "Baldrik", "Balim", "Balin", "Balzud", "Bardin", "Barnok", "Beledar", "Belorn", "Bifur", "Bohdi", "Boltrez", "Bombur", "Borek", "Borgin", "Borig", "Borri","Bragi", "Brand", "Brock", "Broderin", "Brokk", "Brond", "Brun", "Burlok", "Dain", "Darin", "Darluk", "Decredie", "Deemax", "Dern", "Dimzad", "Dirk", "Dolgan", "Dori", "Dorin", "Dowbur", "Dron", "Drumin", "Dumwin", "Duncan", "Dunnor", "Durin", "Durlag", "Durnatz", "Dwalin", "Fimbur", "Fjalar", "Flint", "Frar", "Fundin", "Gafar", "Garag", "Garil", "Garin", "Garick", "Garm", "Gazil", "Gazula", "Gazunda", "Gharth", "Gimli", "Gloin", "Glosh", "Gnarok", "Gnimsh", "Gomrund", "Gotmong", "Gorm", "Gorum", "Gotran", "Gotrek", "Gotri", "Grallen", "Greip", "Grim", "Grimnir", "Grolf", "Grom", "Grommo", "Gromph", "Grum", "Grun", "Grunthor", "Hadrin", "Hagmar", "Hagri", "Haki", "Hannar", "Hargin", "Hargrim", "Helgrind", "Holgar", "Hornborin", "Hrotghar",
+                "Hekrath", "Ibun", "Ivan", "Kargan", "Kargrim", "Kazador", "Kazgar", "Kazrik", "Ketiger", "Kharas", "Kili", "Kragg", "Krangal", "Lofar", "Logi", "Mabal", "Malakai", "Malkar", "Melhorn", "Mimir", "Modi", "Molrik", "Nabbi", "Nahar", "Nain", "Narg", "Nester", "Nibin", "Nordri", "Nori", "Norin", "Nyrad", "Odum", "Oinn", "Okri", "Palin", "Ranhar", "Reghar", "Reck", "Reginn", "Reorx", "Rind", "Rogar", "Serg", "Sirrush",
+                "Skaagne", "Skalf", "Snorri", "Sorgi", "Stapmi", "Steg", "Stron", "Sudri", "Surt", "Taggin", "Tairon", "Teran", "Thadrin", "Thain", "Thekkr", "Thingrim", "Thir", "Thor", "Thorek", "Thorgal", "Thorgrim", "Thorin", "Throd", "Thror,Thunar", "Tingrim", "Trygg", "Turin", "Tyorl", "Ug", "Ulfar", "Ulli", "Ulther", "Uther", "Ungrim", "Varek", "Wargrim", "Westri", "Widar", "Wjard", "Yarpen", "Yazeran", "Ymir", "Yodri", "Yog", "Zonri"]
+
+
+
+    rand_im = random.randint(0, (len(lista))-1)
+    if string == "Mężczyzna":
+        rand_n = random.randint(0, (len(lista)) - 1)
+        nazwisko = lista[rand_n] + "son"
+
+    if string == "Kobieta":
+        rand_n = random.randint(0, (len(lista)) - 1)
+        nazwisko = lista[rand_n] + "sdottir"
+
+
+
+    return lista[rand_im] + " " + nazwisko
+
+
 los = random.randint(0,74)
 if los > 74:
     los = 65

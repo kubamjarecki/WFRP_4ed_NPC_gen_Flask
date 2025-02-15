@@ -46,60 +46,39 @@ talentyx = [talenty2, talenty3, "Czytanie/Pisanie", "Wyczulony Zmysł (Wzrok)", 
 
 wzrost = [180, 3]
 
-imiona1 = {1 : "Aes",
-2 : "Ath",
-3 : "Dor",
-4 : "Far",
-5 : "Gal",
-6 : "Im",
-7 : "Lin",
-8 : "Mal",
-9 : "Mor",
-10 : "Ullia"}
+def losowanie_imienia(string):
+    imiona1 = {1: "Aes",
+               2: "Ath",
+               3: "Dor",
+               4: "Far",
+               5: "Gal",
+               6: "Im",
+               7: "Lin",
+               8: "Mal",
+               9: "Mor",
+               10: "Ullia"}
 
-imiona2 = {1 : "a",
-2 : "ath",
-3 : "dia",
-4 : "en",
-5 : "for",
-6 : "lor",
-7 : "mar",
-8 : "ol",
-9 : "sor",
-10 : "than"}
+    imiona2 = {1: "a",
+               2: "ath",
+               3: "dia",
+               4: "en",
+               5: "for",
+               6: "lor",
+               7: "mar",
+               8: "ol",
+               9: "sor",
+               10: "than"}
 
-imiona3 = {1: 'andril', 2: 'anel', 3: 'ellion', 4: 'fin', 5: 'il', 6: 'irian', 7: 'mor', 8: 'nil', 9: 'ric', 10: 'wing'}
+    imiona3 = {1: 'andril', 2: 'anel', 3: 'ellion', 4: 'fin', 5: 'il', 6: 'irian', 7: 'mor', 8: 'nil', 9: 'ric',
+               10: 'wing'}
 
-los = random.randint(1,10)
-if los> 10:
-    los = 9
-
-a = imiona1[los]
-los = random.randint(1,10)
-
-if los> 10:
-    los = 9
-b = imiona2[los]
-los = random.randint(1,10)
-
-if los> 10:
-    los = 9
-c = imiona3[los]
-imiex_z = a + b + c
-
-los = random.randint(1,10)
-if los> 10:
-    los = 9
-a = imiona1[los]
-los = random.randint(1,10)
-if los> 10:
-    los = 9
-b = imiona2[los]
-los = random.randint(1,10)
-if los> 10:
-    los = 9
-c = imiona3[los]
-imiex_m = a + b + c
+    los = random.randint(1,10)
+    a = imiona1[los]
+    los = random.randint(1,10)
+    b = imiona2[los]
+    los = random.randint(1,10)
+    c = imiona3[los]
+    return  a + b + c
 
 wlosy = { 1: 'Srebrnosiwy', 2: 'Popielaty', 3: 'Jasny blond', 4: 'Miodowoblond', 5: 'Miodowoblond', 6: 'Miodowoblond', 7: 'Żółty', 8: 'Żółty', 9: 'Żółty', 10: 'Żółty', 11: 'Miedziany blond', 12: 'Miedziany blond', 13: 'Miedziany blond', 14: 'Blond', 15: 'Blond', 16: 'Blond', 17: 'Migdałowy', 18: 'Czerwony', 19: 'Czarny'}
 

@@ -44,17 +44,25 @@ umiejki= ["Charyzma (Ogd) ", "Hazard (Int)", "Intuicja (I)", "Język (Int) (Krai
 talentyx = ["Mały", "Odporność (Wt) na Chaos", "Widzenie w Ciemności", "Wyczulony Zmysł (Smak)", 2]
 
 wzrost = [95, 2]
-im_m = ["Ferdinand (Fred)", "Heironymus (Hiro)", "Maximilian(Max)", "Theodosius (Theo)", "Achim", "Adam", "Albert", "Albie", "Alfred", "Alton", "Asham", "Ashford", "Astin", "Axel", "Bertik", "Bertrad", "Blasco", "Bredon", "Burgis", "Burke", "Carruthers", "Carl", "Chibald", "Cibber", "Cottington", "Dekker", "Dobb", "Drayton", "Dugal", "Dyer", "Edgar", "Eldren", "Ellyot", "Eucken", "Fashi", "Fenton", "Fenwark", "Gascoyn", "Gues", "Googe", "Gosson", "Hesselwhite", "Hobb", "Hobbin", "Hodkin", "Hoiquiss", "Hugo", "Jacob", "Jaq", "Jenkin", "Joop", "Joost", "Kelsoe", "Kemble", "Kent", "Linton", "Lodge", "Lollard", "Ludo", "Ludwedge", "Lynwerd", "Map", "Marlow", "Marston", "Martobee", "Max", "Mendel", "Merrick", "Merridee", "Moss", "Murr", "Nashe", "Niklaus", "Niles", "Nivers", "Norbe", "Nython", "Orlane", "Oscar", "Otem", "Parse", "Paul", "Pence", "Penge", "Plunkett", "Pomme", "Pons", "Poole", "Quillan", "Quince", "Quinn", "Ralf", "Reene", "Reeve", "Reswald", "Rudi", "Ruskin", "Seldon", "Sime", "Spence", "Syler", "Talbot", "Tananger", "Taqi", "Tarquin", "Tasse", "Taum", "Tavi", "Tew", "Thame", "Theo", "Thomas", "Thorne", "Tibbs", "Tichbourne", "Tillyard", "Tobus", "Tolquist", "Tuck", "Tyldan", "Tyman", "Tyndal", "Udo", "Valens", "Vaughn", "Vicars", "Victor", "Wade", "Walter", "Warwyck", "Wat", "Watters", "Wim", "Wyatt"]
-im_z = ["Antoniella (Anni)", "Esmerelda(Esme)", "Thomasina (Tina)", "Rosalinda(Rosa)", "Agnes", "Alice", "Amabelle", "Barthony", "Beasley", "Beaswell", "Bree", "Briley", "Canty", "Crowley", "Cubbardy", "Dee", "Dendy", "Dudney", "Dunleary", "Elena", "Eva", "Frida", "Gentry", "Greta", "Hanna", "Heidi", "Hilda", "Hoby", "Janna", "Karin", "Ketta", "Lane", "Leese", "Leni", "Lidda", "Linshey", "Lyly", "Maere", "Marie", "Misha", "Mosely", "Petra", "Quettery", "Silma", "Sophia", "Susi", "Tarby", "Tella", "Theda", "Tilbury", "Tish", "Ulla", "Wanda"]
 
-nazwisko = ["Ashfield", "Brandysnap", "Hayfoot", "Rumster", "Shortbottom", "Thorncobble", "Haleberry", "Greenhill", "Furfoot", "Greendale", "Warmfeet", "Brandysnap "]
+def  losowanie_imienia(string):
+    if string == "Kobieta":
+        lista = ["Antoniella (Anni)", "Esmerelda(Esme)", "Thomasina (Tina)", "Rosalinda(Rosa)", "Agnes", "Alice", "Amabelle", "Barthony", "Beasley", "Beaswell", "Bree", "Briley", "Canty", "Crowley", "Cubbardy", "Dee", "Dendy", "Dudney", "Dunleary", "Elena", "Eva", "Frida", "Gentry", "Greta", "Hanna", "Heidi", "Hilda", "Hoby", "Janna", "Karin", "Ketta", "Lane", "Leese", "Leni", "Lidda", "Linshey", "Lyly", "Maere", "Marie", "Misha", "Mosely", "Petra", "Quettery", "Silma", "Sophia", "Susi", "Tarby", "Tella", "Theda", "Tilbury", "Tish", "Ulla", "Wanda"]
 
-rand_im = random.randint(0,(len(im_m))- 1)
-rand_iz = random.randint(0, (len(im_z))-1)
-rand_naz = random.randint(0,(len(nazwisko))-1)
+    if string == "Mężczyzna":
+        lista = ["Ferdinand (Fred)", "Heironymus (Hiro)", "Maximilian(Max)", "Theodosius (Theo)", "Achim", "Adam", "Albert", "Albie", "Alfred", "Alton", "Asham", "Ashford", "Astin", "Axel", "Bertik", "Bertrad", "Blasco", "Bredon", "Burgis", "Burke", "Carruthers", "Carl", "Chibald", "Cibber", "Cottington", "Dekker", "Dobb", "Drayton", "Dugal", "Dyer", "Edgar", "Eldren", "Ellyot", "Eucken", "Fashi", "Fenton", "Fenwark", "Gascoyn", "Gues", "Googe", "Gosson", "Hesselwhite", "Hobb", "Hobbin", "Hodkin", "Hoiquiss", "Hugo", "Jacob", "Jaq", "Jenkin", "Joop", "Joost", "Kelsoe", "Kemble", "Kent", "Linton", "Lodge", "Lollard", "Ludo", "Ludwedge", "Lynwerd", "Map", "Marlow", "Marston", "Martobee", "Max", "Mendel", "Merrick", "Merridee", "Moss", "Murr", "Nashe", "Niklaus", "Niles", "Nivers", "Norbe", "Nython", "Orlane", "Oscar", "Otem", "Parse", "Paul", "Pence", "Penge", "Plunkett", "Pomme", "Pons", "Poole", "Quillan", "Quince", "Quinn", "Ralf", "Reene", "Reeve", "Reswald", "Rudi", "Ruskin", "Seldon", "Sime", "Spence", "Syler", "Talbot", "Tananger", "Taqi", "Tarquin", "Tasse", "Taum", "Tavi", "Tew", "Thame", "Theo", "Thomas", "Thorne", "Tibbs", "Tichbourne", "Tillyard", "Tobus", "Tolquist", "Tuck", "Tyldan", "Tyman", "Tyndal", "Udo", "Valens", "Vaughn", "Vicars", "Victor", "Wade", "Walter", "Warwyck", "Wat", "Watters", "Wim", "Wyatt"]
 
-imiex_m = im_m[rand_im] + " " + nazwisko[rand_naz]
-imiex_z = im_z[rand_iz] + " " + nazwisko[rand_naz]
+
+
+    nazwisko = ["Ashfield", "Brandysnap", "Hayfoot", "Rumster", "Shortbottom", "Thorncobble", "Haleberry", "Greenhill", "Furfoot", "Greendale", "Warmfeet", "Brandysnap "]
+
+    rand_im = random.randint(0, (len(lista))-1)
+    rand_naz = random.randint(0, (len(nazwisko))-1)
+
+
+    return lista[rand_im] + " " + nazwisko[rand_naz]
+
+
 
 wlosy = { 1: 'Biały', 2: 'Lniany', 3: 'Rudawy', 4: 'Złoty', 5: 'Złoty', 6: 'Złoty', 7: 'Kasztanowy', 8: 'Kasztanowy', 9: 'Kasztanowy', 10: 'Kasztanowy', 11: 'Rudy', 12: 'Rudy', 13: 'Musztardowy', 14: 'Musztardowy', 15: 'Musztardowy', 16: 'Musztardowy', 17: 'Migdałowy', 18: 'Czekoladowy', 19: 'Lukrecjowy'}
 
