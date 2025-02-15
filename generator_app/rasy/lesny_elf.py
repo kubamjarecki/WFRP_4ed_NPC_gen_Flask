@@ -43,55 +43,48 @@ talenty3 = ["Czytanie/Pisanie", "Niezwykle Odporny"]
 talentyx = [talenty2, talenty3, "Włóczykij", "Widzenie w Ciemności", "Wyczulony Zmysł (Wzrok)"]
 
 wzrost = [180, 3]
+def losowanie_imienia(string):
+    imiona1 = {1 : "Aes",
+    2 : "Ath",
+    3 : "Dor",
+    4 : "Far",
+    5 : "Gal",
+    6 : "Im",
+    7 : "Lin",
+    8 : "Mal",
+    9 : "Mor",
+    10 : "Ullia"}
 
-imiona1 = {1 : "Aes",
-2 : "Ath",
-3 : "Dor",
-4 : "Far",
-5 : "Gal",
-6 : "Im",
-7 : "Lin",
-8 : "Mal",
-9 : "Mor",
-10 : "Ullia"}
+    imiona2 = {1 : "a",
+    2 : "ath",
+    3 : "dia",
+    4 : "en",
+    5 : "for",
+    6 : "lor",
+    7 : "mar",
+    8 : "ol",
+    9 : "sor",
+    10 : "than"}
 
-imiona2 = {1 : "a",
-2 : "ath",
-3 : "dia",
-4 : "en",
-5 : "for",
-6 : "lor",
-7 : "mar",
-8 : "ol",
-9 : "sor",
-10 : "than"}
+    imiona3 = {1 : "arha",
+    2 : "anhu",
+    3 : "dda",
+    4 : "han",
+    5 : "loc",
+    6 : "noc",
+    7 : "oth",
+    8 : "ryn",
+    9 : "stra",
+    10 : "wyth"}
 
-imiona3 = {1 : "arha",
-2 : "anhu",
-3 : "dda",
-4 : "han",
-5 : "loc",
-6 : "noc",
-7 : "oth",
-8 : "ryn",
-9 : "stra",
-10 : "wyth"}
+    los = random.randint(1,10)
+    a = imiona1[los]
+    los = random.randint(1,10)
+    b = imiona2[los]
+    los = random.randint(1,10)
+    c = imiona3[los]
+    return  a + b + c
 
-los = random.randint(1,10)
-a = imiona1[los]
-los = random.randint(1,10)
-b = imiona2[los]
-los = random.randint(1,10)
-c = imiona3[los]
-imiex_z = a + b + c
-
-los = random.randint(1,10)
-a = imiona1[los]
-los = random.randint(1,10)
-b = imiona2[los]
-los = random.randint(1,10)
-c = imiona3[los]
-imiex_m = a + b + c
 
 wlosy = {0 : "Brzozowobialy",
 1 : "Blond",
