@@ -1,25 +1,41 @@
-from flask import Flask, render_template, url_for, redirect, request
-from strona.forms import CreationForm
+from flask import Flask, render_template, url_for, redirect, request, session
+from strona.forms import CreationFormOne
 from generator import Postac
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] ='dugsnaga'
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/one', methods=['GET', 'POST'])
 def formularz():
-    form = CreationForm()
+    form = CreationFormOne()
+
     if form.validate_on_submit():
         postac = Postac(form)
-        postac_ = postac.generate_postac()
-        print(postac_)
-        return redirect(url_for('wyniki', postac_=postac_))
+        postac_dict = postac.generate_postac()
 
-    return render_template('form.html', form=form)
+        if form.dalej.data:
+            session['postac_dict'] = postac_dict
+            return redirect(url_for('two'))
+        if form.losuj_reszte.data:
+            print(postac_dict)
+            session['postac_dict'] = postac_dict
+            return redirect(url_for('wyniki'))
+
+    return render_template('form_one.html', form=form)
+
+@app.route('/two', methods=['GET', 'POST'])
+def two():
+    postac_instance = request.args.get('postac_instance')
+    return render_template('form_two.html', postac_instance=postac_instance)
 
 @app.route('/result', methods=['GET'])
 def wyniki():
-    postac_ = request.args.get('postac_')
-    return render_template('result.html', postac_=postac_)
+    postac_dict = session.get('postac_dict')
+    imie = postac_dict['imie']
+    rasa = postac_dict['rasa']
+
+
+    return render_template('result.html', postac_dict=postac_dict)
 
 
 if __name__ == '__main__':

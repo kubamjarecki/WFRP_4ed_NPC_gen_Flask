@@ -2,23 +2,24 @@
 import random
 
 profesje = {
-    1: 'Aptekarz', 2: 'Czarodziej', 3: 'Inżynier', 4: 'Kapłan', 5: 'Kapłan', 6: 'Kapłan', 7: 'Kapłan',
-    8: 'Kapłan', 9: 'Medyk', 10: 'Mnich', 11: 'Mnich', 12: 'Prawnik', 13: 'Uczony', 14: 'Uczony',
-    15: 'Agitator', 16: 'Kupiec', 17: 'Mieszczanin', 18: 'Mieszczanin', 19: 'Mieszczanin',
-    20: 'Rzemieślnik', 21: 'Rzemieślnik', 22: 'Strażnik', 23: 'Szczurołap', 24: 'Szczurołap', 25: 'Śledczy',
-    26: 'Żebrak', 27: 'Żebrak', 28: 'Artysta', 29: 'Doradca', 30: 'Namiestnik', 31: 'Poseł', 32: 'Służący',
-    33: 'Służący', 34: 'Służący', 35: 'Szlachcic', 36: 'Szpieg', 37: 'Zwadźca', 38: 'Chłop', 39: 'Chłop',
-    40: 'Chłop', 41: 'Chłop', 42: 'Chłop', 43: 'Górnik', 44: 'Guślarz', 45: 'Łowca', 46: 'Łowca',
-    47: 'Mistyk', 48: 'Zarządca', 49: 'Zielarz', 50: 'Zwiadowca', 51: 'Biczownik', 52: 'Biczownik',
-    53: 'Domokrążca', 54: 'Kuglarz', 55: 'Kuglarz', 56: 'Łowca Czarownic', 57: 'Łowca Nagród',
-    58: 'Posłaniec', 59: 'Strażnik Dróg', 60: 'Woźnica', 61: 'Doker', 62: 'Doker', 63: 'Flisak',
-    64: 'Flisak', 65: 'Flisak', 66: 'Pilot Rzeczny', 67: 'Pirat Rzeczny', 68: 'Przemytnik',
-    69: 'Przewoźnik', 70: 'Przewoźnik', 71: 'Strażnik Rzeczny', 72: 'Strażnik Rzeczny', 73: 'Żeglarz',
-    74: 'Żeglarz', 75: 'Banita', 76: 'Banita', 77: 'Banita', 78: 'Banita', 79: 'Czarownica', 80: 'Paser',
-    81: 'Hiena Cmentarna', 82: 'Rajfur', 83: 'Rajfur', 84: 'Rekietier', 85: 'Szarlatan', 86: 'Złodziej',
-    87: 'Złodziej', 88: 'Złodziej', 89: 'Gladiator', 90: 'Kapłan Bitewny', 91: 'Kawalerzysta',
-    92: 'Kawalerzysta', 93: 'Ochroniarz', 94: 'Ochroniarz', 95: 'Oprych', 96: 'Rycerz', 97: 'Żołnierz',
-    98: 'Żołnierz', 99: 'Żołnierz', 100: 'Żołnierz'}
+        1: 'Aptekarz', 2: 'Czarodziej', 3: 'Inżynier', 4: 'Kapłan', 5: 'Kapłan', 6: 'Kapłan', 7: 'Kapłan',
+        8: 'Kapłan', 9: 'Medyk', 10: 'Mnich', 11: 'Mnich', 12: 'Prawnik', 13: 'Uczony', 14: 'Uczony',
+        15: 'Agitator', 16: 'Kupiec', 17: 'Mieszczanin', 18: 'Mieszczanin', 19: 'Mieszczanin',
+        20: 'Rzemieślnik', 21: 'Rzemieślnik', 22: 'Strażnik', 23: 'Szczurołap', 24: 'Szczurołap', 25: 'Śledczy',
+        26: 'Żebrak', 27: 'Żebrak', 28: 'Artysta', 29: 'Doradca', 30: 'Namiestnik', 31: 'Poseł', 32: 'Służący',
+        33: 'Służący', 34: 'Służący', 35: 'Szlachcic', 36: 'Szpieg', 37: 'Zwadźca', 38: 'Chłop', 39: 'Chłop',
+        40: 'Chłop', 41: 'Chłop', 42: 'Chłop', 43: 'Górnik', 44: 'Guślarz', 45: 'Łowca', 46: 'Łowca',
+        47: 'Mistyk', 48: 'Zarządca', 49: 'Zielarz', 50: 'Zwiadowca', 51: 'Biczownik', 52: 'Biczownik',
+        53: 'Domokrążca', 54: 'Kuglarz', 55: 'Kuglarz', 56: 'Łowca Czarownic', 57: 'Łowca Nagród',
+        58: 'Posłaniec', 59: 'Strażnik Dróg', 60: 'Woźnica', 61: 'Doker', 62: 'Doker', 63: 'Flisak',
+        64: 'Flisak', 65: 'Flisak', 66: 'Pilot Rzeczny', 67: 'Pirat Rzeczny', 68: 'Przemytnik',
+        69: 'Przewoźnik', 70: 'Przewoźnik', 71: 'Strażnik Rzeczny', 72: 'Strażnik Rzeczny', 73: 'Żeglarz',
+        74: 'Żeglarz', 75: 'Banita', 76: 'Banita', 77: 'Banita', 78: 'Banita', 79: 'Czarownica', 80: 'Paser',
+        81: 'Hiena Cmentarna', 82: 'Rajfur', 83: 'Rajfur', 84: 'Rekietier', 85: 'Szarlatan', 86: 'Złodziej',
+        87: 'Złodziej', 88: 'Złodziej', 89: 'Gladiator', 90: 'Kapłan Bitewny', 91: 'Kawalerzysta',
+        92: 'Kawalerzysta', 93: 'Ochroniarz', 94: 'Ochroniarz', 95: 'Oprych', 96: 'Rycerz', 97: 'Żołnierz',
+        98: 'Żołnierz', 99: 'Żołnierz', 100: 'Żołnierz'}
+
 
 cechy= {
     "WW" : 20,

@@ -27,13 +27,27 @@
         .btn-primary {
             background-color: #d11a2a;  /* Krwista czerwień */
             border-color: #a31420;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .btn-primary:hover {
             background-color: #ff6f00;  /* Ognisty pomarańcz */
             border-color: #d35400;
         }
+        .btn-primary:focus, .btn-primary:active {
+            outline: none;
+            box-shadow: 0 0 5px 2px rgba(255, 111, 0, 0.8);
+        }
         .short-input {
             width: 250px;  /* Skrócone pole tekstowe dla imienia */
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-check-input {
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -88,8 +102,26 @@
                     {% endfor %}
                 </div>
             </div>
+            <!-- Wybór profesji -->
+             <div class="form-group">
+                <label>{{ form.profession.label }}</label>
+                <div>
+                    {% for subfield in form.profession %}
+                        <div class="form-check form-check-inline">
+                            {{ subfield(class="form-check-input") }}
+                            <label class="form-check-label" for="{{ subfield.id }}">
+                                {{ subfield.label.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-            <button type="submit" class="btn btn-primary">Generuj</button>
+            <!-- Przyciski -->
+            <div class="form-group mt-4">
+                    {{ form.dalej(class="btn btn-primary mr-3") }}
+                    {{ form.losuj_reszte(class="btn btn-primary") }}
+            </div>
         </form>
     </div>
 
