@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError, RadioField
+from wtforms import StringField, SubmitField, RadioField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -45,12 +45,15 @@ class CreationFormOne(FlaskForm):
     name = StringField('Imię')
     sex = RadioField('Wybierz płeć',
                      choices=[('Mężczyzna', 'Mężczyzna'), ('Kobieta', 'Kobieta')],
-                     default='M')
+                     default='Mężczyzna')
 
     profession = RadioField('Wybierz profesję',
                              choices=profession_choices,
                              default='Losowo')
 
+    level = SelectField(f'Wybierz poziom postaci.(Nr oznacza ukończoną profesję):',
+                        choices=[(0,0),('1',1),(2,2),(3,3),(4,4)],
+                        default='0', coerce=int)
     #########################
     #### przyciski ##########
     #########################
@@ -58,3 +61,6 @@ class CreationFormOne(FlaskForm):
     losuj_reszte = SubmitField('Losuj Resztę') #render_kw={"class": "btn btn-primary"})
 
 
+class CreationFormTwo(FlaskForm):
+    def __init__(self,dict):
+        self.dict = dict

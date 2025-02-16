@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 from strona.forms import CreationFormOne
-from generator import Postac
+from generator import Postac, PostacTalentyIUmiejki
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] ='dugsnaga'
@@ -25,8 +25,10 @@ def formularz():
 
 @app.route('/two', methods=['GET', 'POST'])
 def two():
-    postac_instance = request.args.get('postac_instance')
-    return render_template('form_two.html', postac_instance=postac_instance)
+    postac_dict = session.get('postac_dict')
+    postac = PostacTalentyIUmiejki(postac_dict)
+    postac.get_profession_traits_and_add_to_character()
+    return render_template('form_two.html',)
 
 @app.route('/result', methods=['GET'])
 def wyniki():

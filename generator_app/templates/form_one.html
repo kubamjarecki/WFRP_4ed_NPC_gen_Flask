@@ -49,6 +49,22 @@
         .form-check-input {
             border-radius: 50%;
         }
+        /* Styl dla dropdown Level */
+        .dropdown-level {
+            width: 30%;  /* 30% szerokości */
+            display: inline-block;
+            background-color: #2b2b2b; /* Ciemne tło dla dropdown */
+            color: #eaeaea;
+            border: 1px solid #444;
+            border-radius: 5px;
+            position: relative;
+            top: -15px;
+            left: 25px;
+        }
+        .dropdown-level option {
+            background-color: #2b2b2b;
+            color: #eaeaea;
+        }
     </style>
 </head>
 <body>
@@ -102,8 +118,9 @@
                     {% endfor %}
                 </div>
             </div>
+
             <!-- Wybór profesji -->
-             <div class="form-group">
+            <div class="form-group">
                 <label>{{ form.profession.label }}</label>
                 <div>
                     {% for subfield in form.profession %}
@@ -117,10 +134,19 @@
                 </div>
             </div>
 
+            <!-- Level -->
+            <div class="form-group">
+                <label>
+                    Wybierz poziom postaci <br>
+                    <small class="text-muted">(Nr oznacza ukończoną profesję)</small>
+                </label>
+                {{ form.level(class="form-control dropdown-level") }}
+            </div>
+
             <!-- Przyciski -->
             <div class="form-group mt-4">
-                    {{ form.dalej(class="btn btn-primary mr-3") }}
-                    {{ form.losuj_reszte(class="btn btn-primary") }}
+                {{ form.dalej(class="btn btn-primary mr-3") }}
+                {{ form.losuj_reszte(class="btn btn-primary") }}
             </div>
         </form>
     </div>
