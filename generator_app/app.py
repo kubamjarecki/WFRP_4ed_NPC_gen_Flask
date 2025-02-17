@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, request, session
-from strona.forms import CreationFormOne
+from strona.forms import CreationFormOne, CreationFormTwo
 from generator import Postac, PostacTalentyIUmiejki
 
 app = Flask(__name__)
@@ -27,8 +27,25 @@ def formularz():
 def two():
     postac_dict = session.get('postac_dict')
     postac = PostacTalentyIUmiejki(postac_dict)
-    postac.get_profession_traits_and_add_to_character()
-    return render_template('form_two.html',)
+    form = CreationFormTwo()
+    if form.validate_on_submit():
+        if form.dalej.data:
+            if form.losuj.data:
+                #logika losowania TBC
+                return redirect(url_for('three'))
+            else:
+                #przekazujemy wpisane wartości do strony trzeciej TBC
+                return redirect(url_for('three'))
+        if form.losuj_reszte.data:
+            if form.losuj.data:
+                #logika losowania reszty TBC
+                return redirect(url_for('wyniki'))
+            else:
+                # przekazujemy wpisane wartości do strony wyników TBC
+                return redirect(url_for('wyniki'))
+
+    return render_template('form_two.html',
+                           postac_dict=postac_dict, form=form)
 
 @app.route('/result', methods=['GET'])
 def wyniki():

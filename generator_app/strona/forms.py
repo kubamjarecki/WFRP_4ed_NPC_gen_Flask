@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, RadioField, SelectField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, RadioField, SelectField, IntegerField, BooleanField
+from wtforms.validators import NumberRange
 
 
 
@@ -62,5 +62,22 @@ class CreationFormOne(FlaskForm):
 
 
 class CreationFormTwo(FlaskForm):
-    def __init__(self,dict):
-        self.dict = dict
+
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+    losuj = BooleanField('Losuj', default=False)
+
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
+
+
+

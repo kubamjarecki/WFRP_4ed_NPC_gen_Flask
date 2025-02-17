@@ -1,10 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Generator Postaci WFRP - Podsumowanie</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: #eaeaea;
+        }
+        h1 {
+            color: #d11a2a;
+            font-family: 'Georgia', serif;
+            text-shadow: 2px 2px #000;
+        }
+        p {
+            margin-bottom: 0.3rem; /* Zmniejszony odstęp między zdaniami */
+        }
+        .card {
+            background-color: #2b2b2b;
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(209, 26, 42, 0.4); /* Czerwona poświata */
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #d11a2a;
+            color: #eaeaea;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px #000;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .lead {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .lead .highlight {
+            color: #ff6f00;
+            font-weight: bold;
+            text-shadow: 1px 1px #000;
+        }
+        .lead .profesja {
+            color: #d11a2a;
+            font-weight: bold;
+            text-shadow: 1px 1px #000;
+        }
+        .btn-primary {
+            background-color: #d11a2a;
+            border-color: #a31420;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            background-color: #ff6f00;
+            border-color: #d35400;
+        }
+        .btn-primary:focus, .btn-primary:active {
+            outline: none;
+            box-shadow: 0 0 5px 2px rgba(255, 111, 0, 0.8);
+        }
+    </style>
 </head>
 <body>
+    <div class="container mt-5">
+        <h1>
+            <p>{{ postac_dict['imie'] }} to {{ postac_dict['rasa'] }}, {{ postac_dict['plec'] }}.</p>
+            <p>Jest to {{ postac_dict['doswiadczenie'] }} {{ postac_dict['profesja'] }}.</p>
+        </h1>
 
+        <!-- Formularz -->
+        <form method="POST" action="{{ url_for('two') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="WW">WW</label>
+                {{ form.WW(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="US">US</label>
+                {{ form.US(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="S">S</label>
+                {{ form.S(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="Wt">Wt</label>
+                {{ form.Wt(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="I">I</label>
+                {{ form.I(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="Zw">Zw</label>
+                {{ form.Zw(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="Zr">Zr</label>
+                {{ form.Zr(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="Int">Int</label>
+                {{ form.Int(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="SW">SW</label>
+                {{ form.SW(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <label for="Ogd">Ogd</label>
+                {{ form.Ogd(class="form-control") }}
+            </div>
+
+            <!-- Checkbox Losuj -->
+            <div class="form-check">
+                {{ form.losuj(class="form-check-input") }}
+                <label class="form-check-label" for="losuj">Losuj</label>
+            </div>
+
+            <!-- Przyciski -->
+            <div class="form-group mt-3">
+                {{ form.dalej(class="btn btn-primary") }}
+                {{ form.losuj_reszte(class="btn btn-primary ml-3") }}
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Bootstrap 4 JS + jQuery + Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import unicodedata
 
 
 class Postac:
+
     def __init__(self, form):
         self.form = form
         self.race = form.race.data
@@ -12,6 +13,9 @@ class Postac:
         self.sex=form.sex.data
         self.profession=form.profession.data
         self.level = form.level.data
+        self.experience = ""
+
+
 
     def generate_postac(self):
 
@@ -63,12 +67,18 @@ class Postac:
             self.profession = profesje[rand]
 
 
-        #print(self.profession)
-        #print(self.race)
-        #print(self.sex)
-        #print(self.name)
-        #print(self.wzrost)
+        #######################################
+        ###### określamy doświadczenie ########
+        #######################################
 
+        doswiadczenie = {
+            "0": "zielony",
+            "1": "początkujący",
+            "2": "znający swój fach",
+            "3": "doświadczony",
+            "4": "mistrzowski"
+        }
+        self.experience = doswiadczenie[str(self.level)]
         ############################################################################
         ######### tworzę słownik do przekazania do następnego widoku ###############
         ############################################################################
@@ -78,10 +88,13 @@ class Postac:
             "rasa": self.race,
             "profesja": self.profession,
             "poziom": self.level,
-            "talenty": talentyx
+            "talenty": talentyx,
+            "doswiadczenie": self.experience
         }
 
         return postac_slownik
+
+
 
 class PostacTalentyIUmiejki:
     def __init__(self, postac_slownik):
@@ -119,7 +132,7 @@ class PostacTalentyIUmiejki:
         99: 'Zręczny', 100: 'Zręczny'
     }
 
-    def draw_random_talents(self, character):
+    def draw_random_talents(self):
         if isinstance(self.talenty_lista[-1], int):
             while True:
                 liczba = self.talenty_lista[-1]
