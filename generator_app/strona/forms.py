@@ -62,6 +62,32 @@ class CreationFormOne(FlaskForm):
 
 
 class CreationFormTwo(FlaskForm):
+    class Meta:
+        csrf = False  # Wyłącz CSRF dla testów
+
+    def __init__(self, dict, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.dict = dict
+        self.choosable_talent_list = dict['talenty_lista_liczba']
+        self.count = len(self.choosable_talent_list)
+
+        # Debugowanie: sprawdzenie ile mamy talentów
+        print(f"Liczba talentów: {self.count}")
+
+        # Dynamiczne tworzenie dropdownów
+        for i in range(self.count):
+            options = self.choosable_talent_list[i]
+            talent_field_name = f'talent_{i+1}'
+            field = SelectField(
+                f'Talent {i+1}',
+                choices=[(option, option) for option in options],
+                #render_kw={'id': f'talent_{i+1}'}  # Ustawienie ID ręcznie
+            )
+            # Dodanie pola do formularza przy użyciu _fields
+            field.id = talent_field_name
+            field_name = f'talent_{i+1}'
+            self._fields[field_name] = field
+
 
     WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
     US = IntegerField('US', validators=[NumberRange(min=2, max=20)])

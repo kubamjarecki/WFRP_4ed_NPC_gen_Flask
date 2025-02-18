@@ -11,7 +11,13 @@ def formularz():
 
     if form.validate_on_submit():
         postac = Postac(form)
-        postac_dict = postac.generate_postac()
+
+        postac.generate_race_name_profession()
+        postac.give_experience()
+        postac.draw_talents()
+        postac.get_profession_traits_and_add_to_character()
+        postac_dict = postac.generate_json_readable_output()
+
 
         if form.dalej.data:
             session['postac_dict'] = postac_dict
@@ -27,7 +33,7 @@ def formularz():
 def two():
     postac_dict = session.get('postac_dict')
     postac = PostacTalentyIUmiejki(postac_dict)
-    form = CreationFormTwo()
+    form = CreationFormTwo(postac_dict)
     if form.validate_on_submit():
         if form.dalej.data:
             if form.losuj.data:
