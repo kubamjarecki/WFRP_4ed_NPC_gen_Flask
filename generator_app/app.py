@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request, session
-from strona.forms import CreationFormOne, CreationFormTwo
+from strona.forms import (CreationFormOne, CreationFormTwo, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
+                          CreationFormWoodElf, CreationFormHalfing)
 from generator import Postac, PostacTalentyIUmiejki
 
 app = Flask(__name__)
@@ -8,7 +9,6 @@ app.config['SECRET_KEY'] ='dugsnaga'
 @app.route('/one', methods=['GET', 'POST'])
 def formularz():
     form = CreationFormOne()
-
     if form.validate_on_submit():
         postac = Postac(form)
 
@@ -23,7 +23,6 @@ def formularz():
             session['postac_dict'] = postac_dict
             return redirect(url_for('two'))
         if form.losuj_reszte.data:
-            print(postac_dict)
             session['postac_dict'] = postac_dict
             return redirect(url_for('wyniki'))
 
@@ -31,9 +30,26 @@ def formularz():
 
 @app.route('/two', methods=['GET', 'POST'])
 def two():
+
     postac_dict = session.get('postac_dict')
+
     postac = PostacTalentyIUmiejki(postac_dict)
-    form = CreationFormTwo(postac_dict)
+    #wybór formularza
+    if postac_dict['rasa'] == 'Krasnolud':
+        form = CreationFormDvarf()
+    if postac_dict['rasa'] == 'Człowiek':
+        form = CreationFormMan()
+    if postac_dict['rasa'] == 'Wysoki elf':
+        form=CreationFormHighElf()
+    if postac_dict['rasa'] == 'Leśny elf':
+        form = CreationFormWoodElf()
+    if postac_dict['rasa'] == 'Niziołek':
+        form= CreationFormHalfing()
+    # else:
+    #     form = CreationFormTwo(postac_dict)
+    #     print(dir(form))
+
+    ## GUZIKI
     if form.validate_on_submit():
         if form.dalej.data:
             if form.losuj.data:

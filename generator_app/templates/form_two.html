@@ -100,11 +100,8 @@
         <!-- Dropdown umiejętności -->
         <div class="flex-row">
             <h3>Wybierz talenty:</h3>
-            {% for field in form %}
-                {% if field.name and field.name.startswith('talent_') %}
-                    <label for="{{ field.id }}">{{ field.label.text }}</label>
-                    {{ field(class="form-control", id=field.id) }}
-                {% endif %}
+            {% for field in form.fields %}
+                {{ field(class="form-select", id=field.id) }}
             {% endfor %}
         </div>
 

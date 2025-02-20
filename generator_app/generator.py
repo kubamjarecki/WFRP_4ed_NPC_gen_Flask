@@ -99,7 +99,7 @@ class Postac:
         ##### losujemy profesję ###############
         ######################################
         if self.profession == "Losowo":
-            rand = random.randint(0,100)
+            rand = random.randint(1,100)
             self.profession = profesje[rand]
 
 

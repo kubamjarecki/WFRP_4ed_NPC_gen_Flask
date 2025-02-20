@@ -62,9 +62,6 @@ class CreationFormOne(FlaskForm):
 
 
 class CreationFormTwo(FlaskForm):
-    class Meta:
-        csrf = False  # Wyłącz CSRF dla testów
-
     def __init__(self, dict, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.dict = dict
@@ -89,6 +86,7 @@ class CreationFormTwo(FlaskForm):
             self._fields[field_name] = field
 
 
+
     WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
     US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
     S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
@@ -106,4 +104,170 @@ class CreationFormTwo(FlaskForm):
     losuj_reszte = SubmitField('Losuj Resztę')
 
 
+    #######################################
+    ##### osobne formularze ###############
+    #######################################
+
+
+
+
+
+
+
+
+class CreationFormDvarf(FlaskForm):
+    #cechy
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+    #Talenty
+    field_1 = SelectField('Talent 1',
+        choices=[("Czytanie/Pisanie","Czytanie/Pisanie"), ("Nieustępliwy","Nieustępliwy")])
+
+    field_2 = SelectField('Talent 2',
+                          choices=[("Odporność Psychiczna","Odporność Psychiczna"), ("Nieugięty", "Nieugięty")])
+    @property
+    def fields(self):
+        return [self.field_1, self.field_2]
+
+    #Umiejki
+
+
+    losuj = BooleanField('Losuj', default=False)
+
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
+
+    # Talenty
+
+
+
+class CreationFormWoodElf(FlaskForm):
+    #cechy
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+    #Talenty
+    field_1 = SelectField('Talent 1',
+        choices= [("Twardziel", "Twardziel"),
+                  ("Percepcja Magiczna","Percepcja Magiczna")])
+
+    field_2 = SelectField('Talent 2',
+                          choices=[("Czytanie/Pisanie", "Czytanie/Pisanie"),
+                                   ("Niezwykle Odporny", "Niezwykle Odporny")])
+    @property
+    def fields(self):
+        return [self.field_1, self.field_2]
+
+    #Umiejki
+    losuj = BooleanField('Losuj', default=False)
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
+
+    # Talenty
+
+
+class CreationFormHighElf(FlaskForm):
+    # cechy
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+    # Talenty
+    talenty2 = ["Szósty Zmysł", "Percepcja Magiczna"]
+    talenty3 = ["Błyskotliwość", "Zimna Krew"]
+    field_1 = SelectField('Talent 1',
+                          choices=[("Szósty Zmysł", "Szósty Zmysł"),
+                                   ("Percepcja Magiczna", "Percepcja Magiczna")])
+
+    field_2 = SelectField('Talent 2',
+                          choices=[("Błyskotliwość", "Błyskotliwość"),
+                                   ("Zimna Krew", "Zimna Krew")])
+
+    @property
+    def fields(self):
+        return [self.field_1, self.field_2]
+
+    # Umiejki
+    losuj = BooleanField('Losuj', default=False)
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
+
+    # Talenty
+
+class CreationFormMan(FlaskForm):
+    # cechy
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+    # Talenty
+    field_1 = SelectField('Talent 1',
+                          choices=[(" Błyskotliwość", " Błyskotliwość"),
+                                   ("Charyzmatyczny", "Charyzmatyczny")])
+
+    @property
+    def fields(self):
+        return [self.field_1]
+
+    # Umiejki
+
+    losuj = BooleanField('Losuj', default=False)
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
+
+
+class CreationFormHalfing(FlaskForm):
+    # cechy
+    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+
+
+    @property
+    def fields(self):
+        return []
+
+    # Umiejki
+
+    losuj = BooleanField('Losuj', default=False)
+    dalej = SubmitField('Dalej')
+    losuj_reszte = SubmitField('Losuj Resztę')
 
