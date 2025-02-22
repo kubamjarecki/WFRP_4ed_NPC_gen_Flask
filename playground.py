@@ -1,7 +1,8 @@
 import random
 
 
-zasieg = range(1,100)
+zasieg = random.randint(1,100)
+print(zasieg)
 
 def draw_random_characteristics():
     dobroc_wys = 0
@@ -44,4 +45,4 @@ def draw_random_characteristics():
 
 
 
-draw_random_characteristics()
+

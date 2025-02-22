@@ -134,7 +134,7 @@ if klasa == "Wodniacy":
 if klasa == "Łotrzy":
     wyp0 = ["kaptur lub maska", "sakwa", "sztylet", "ubranie", "torba na ramię z 2 świecami", "1k10 zapałek"]
 if klasa == "Wojownicy":
-    wyp0 = ["Broń Biała (WW)", "sakwa", "sztylet", "ubranie"]
+    wyp0 = ["Broń Biała", "sakwa", "sztylet", "ubranie"]
 
 
 

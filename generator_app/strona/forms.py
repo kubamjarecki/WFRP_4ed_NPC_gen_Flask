@@ -125,10 +125,6 @@ class CreationFormDvarf(FlaskForm):
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
 
-
-
-
-
 class CreationFormWoodElf(FlaskForm):
     #cechy
     WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
@@ -179,8 +175,6 @@ class CreationFormWoodElf(FlaskForm):
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
-
-
 
 class CreationFormHighElf(FlaskForm):
     # cechy
@@ -236,7 +230,6 @@ class CreationFormHighElf(FlaskForm):
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
 
-
 class CreationFormMan(FlaskForm):
     def validate_choices(form, field):
         if not (len(field.data) == 3):
@@ -253,6 +246,10 @@ class CreationFormMan(FlaskForm):
     SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
     Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
+    @property
+    def cechy(self):
+        return [self.WW, self.US, self.S, self.Wt,self.I,
+                self.Zw,self.Zr, self.Int,self.SW, self.Ogd]
     # Talenty
     field_1 = SelectField('Talent 1',
                           choices=[(" Błyskotliwość", " Błyskotliwość"),
@@ -287,7 +284,6 @@ class CreationFormMan(FlaskForm):
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
-
 
 class CreationFormHalfing(FlaskForm):
     # cechy

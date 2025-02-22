@@ -19,6 +19,8 @@ def formularz():
         postac.get_profession_traits_and_add_to_character()
         postac.unpack_profession_talents()
         postac.unpack_profession_skills()
+        postac.unpack_equipment()
+        postac.create_gold_str_and_append_to_character_equipment()
 
 
         postac_dict = postac.generate_json_readable_output()
@@ -64,10 +66,13 @@ def two():
 
         ## wywołujemy funkcje generatora
         postac.add_talents()
-        print(postac.skills)
-        print(form.pola_umiejek5.data)
         postac.add_skills()
-        print(postac.skills)
+        postac.add_cechy()
+        postac.modify_traits_from_talents()
+        postac.develop_traits()
+
+
+
         postac_dict2 = postac.generate_json_readable_output()
 
         if form.dalej.data:

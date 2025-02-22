@@ -52,6 +52,7 @@ class Postac:
             99: 'Zręczny', 100: 'Zręczny'
         }
         self.slownik_talentow_i_level = {}
+        self.equipment = []
 
 
     def generate_race_name_profession(self):
@@ -141,14 +142,13 @@ class Postac:
         file = normalized.encode("ASCII", "ignore").decode("utf-8")
         module_name = f'{folder}.{file}'
         profesja_variables = importlib.import_module(module_name)
-        self.klasa=profesja_variables.klasa,
-        self.nazwa_profesji=profesja_variables.nazwa_profesji,
-        self.status=profesja_variables.status,
-        self.rozwiniecia_cech=profesja_variables.rozwiniecia_cech,
+        self.klasa=profesja_variables.klasa
+        self.nazwa_profesji=profesja_variables.nazwa_profesji
+        self.status=profesja_variables.status
+        self.rozwiniecia_cech=profesja_variables.rozwiniecia_cech
         self.slownik_umiejetnosci_oraz_levelu=profesja_variables.slownik_umiejetnosci_oraz_levelu
-
         self.slownik_talentow_i_level = profesja_variables.talenty
-        self.wyp=profesja_variables.wyp,
+        self.wyp=profesja_variables.wyp
         self.waga=profesja_variables.waga
 
     def unpack_profession_talents(self):
@@ -165,6 +165,35 @@ class Postac:
                 v=5*val
                 self.skills[key]=v
 
+    def unpack_equipment(self):
+        print(self.wyp)
+        count = self.level
+        for element in self.wyp[0]:
+            self.equipment.append(element)
+
+        for element in self.wyp[1]:
+            self.equipment.append(element)
+        if self.level >= 2:
+            for element in self.wyp[2]:
+                self.equipment.append(element)
+        if self.level >= 3:
+            for element in self.wyp[3]:
+                self.equipment.append(element)
+                self.equipment.append(element)
+        if self.level == 4:
+            for element in self.wyp[4]:
+                self.equipment.append(element)
+    def create_gold_str_and_append_to_character_equipment(self):
+        status = self.status[self.level]
+        if status == "Złoto":
+            majatek = "1 ZK"
+        if status == "Srebro":
+            a = random.randint(1, 10)
+            majatek = f"{a} SS"
+        if status == "Brąz":
+            a = random.randint(2, 20)
+            majatek = f"{a} BP"
+        self.equipment.append(majatek)
 
     def generate_json_readable_output(self):
         ############################################################################
@@ -178,11 +207,7 @@ class Postac:
                 #print(f"{attr}: {value}")
                 postac_slownik[attr] = value
 
-
-
         return postac_slownik
-
-
 
 class PostacTalentyIUmiejki:
     def __init__(self, postac_slownik, form):
@@ -191,10 +216,15 @@ class PostacTalentyIUmiejki:
         self.name = postac_slownik['name']
         self.sex = postac_slownik['sex']
         self.level = postac_slownik['level']
-        self.talents =postac_slownik['talents']
+        self.talents = postac_slownik['talents']
         self.skills = postac_slownik['skills']
         self.form = form
         self.cechy = postac_slownik['cechy']
+        self.waga = postac_slownik['waga']
+        self.traits_dev = postac_slownik['rozwiniecia_cech']
+        self.cechy_rozwiniecia = {}
+        self.cechy_rozwiniete = {}
+        self.equipment = postac_slownik['equipment']
 
     def add_talents(self):
         for field in self.form.fields:
@@ -212,12 +242,82 @@ class PostacTalentyIUmiejki:
             else:
                 self.skills[skill]=3
 
+    def random_traits(self):
+        rzuty = []
+        a = 10
+        while a > 0:
+            b = random.randint(1, 10) + random.randint(1, 10)
+            rzuty.append(b)
+            a = a - 1
+
+
+        rzuty.sort()
+        rzuty.reverse()
+        print (rzuty)
+
+
+        for cecha in self.waga:
+            rzut = rzuty.pop(0)
+            self.cechy[cecha] += rzut
+
+        print(self.cechy)
+
+    def wrote_traits(self):
+        for cecha in self.form.cechy:
+            atrybut = cecha.label.text
+            rzut = cecha.data
+            self.cechy[atrybut] += rzut
+
+    def add_cechy(self):
+        random = False
+
+        for cecha in self.form.cechy:
+            if cecha.data == None:
+                random = True
+
+        if random:
+            self.random_traits()
+        else:
+            self.wrote_traits()
+
+    def develop_traits(self):
+        for trait, level in self.traits_dev.items():
+            level += self.level
+            if level > 0:
+                wart = level*5
+                self.cechy_rozwiniecia[trait] = wart
+                self.cechy_rozwiniete[trait] = self.cechy[trait] + wart
+
+
+    def modify_traits_from_talents(self):
+        if "Urodzony Wojownik" in self.talents:
+            self.cechy["WW"] = self.cechy["WW"] + 5
+        if "Charyzmatyczny" in self.talents:
+            self.cechy["Ogd"] = self.cechy["Ogd"] + 5
+        if "Błyskotliwość" in self.talents:
+            self.cechy["Int"] = self.cechy["Int"] + 5
+        if "Bardzo silny" in self.talents:
+            self.cechy["S"] = self.cechy["S"] + 5
+        if "Niezwykle Odporny" in self.talents:
+            self.cechy["Wt"] = self.cechy["Wt"] + 5
+        if "Strzelec Wyborowy" in self.talents:
+            self.cechy["US"] = self.cechy["US"] + 5
+        if "Szybki Refleks" in self.talents:
+            self.cechy["Zw"] = self.cechy["Zw"] + 5
+        if "Zimna Krew" in self.talents:
+            self.cechy["SW"] = self.cechy["SW"] + 5
+        if "Zręczny" in self.talents:
+            self.cechy["Zr"] = self.cechy["Zr"] + 5
+        if "Czujny" in self.talents:
+            self.cechy["I"] = self.cechy["I"] + 5
+
+
 
     def generate_json_readable_output(self):
         postac_slownik = {}
         for attr, value in vars(self).items():
             if attr != "form":
-                #print(f"{attr}: {value}")
+                print(f"{attr}: {value}")
                 postac_slownik[attr] = value
 
         return postac_slownik
