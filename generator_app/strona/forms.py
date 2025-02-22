@@ -78,6 +78,11 @@ class CreationFormDvarf(FlaskForm):
     SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
     Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
+    @property
+    def cechy(self):
+        return [self.WW, self.US, self.S, self.Wt,self.I,
+                self.Zw,self.Zr, self.Int,self.SW, self.Ogd]
+
     #Talenty
     field_1 = SelectField('Talent 1',
         choices=[("Czytanie/Pisanie","Czytanie/Pisanie"), ("Nieustępliwy","Nieustępliwy")])
@@ -138,6 +143,11 @@ class CreationFormWoodElf(FlaskForm):
     SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
     Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
+    @property
+    def cechy(self):
+        return [self.WW, self.US, self.S, self.Wt,self.I,
+                self.Zw,self.Zr, self.Int,self.SW, self.Ogd]
+
     #Talenty
     field_1 = SelectField('Talent 1',
         choices= [("Twardziel", "Twardziel"),
@@ -189,6 +199,10 @@ class CreationFormHighElf(FlaskForm):
     SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
     Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
+    @property
+    def cechy(self):
+        return [self.WW, self.US, self.S, self.Wt,self.I,
+                self.Zw,self.Zr, self.Int,self.SW, self.Ogd]
     # Talenty
     talenty2 = ["Szósty Zmysł", "Percepcja Magiczna"]
     talenty3 = ["Błyskotliwość", "Zimna Krew"]
@@ -298,7 +312,10 @@ class CreationFormHalfing(FlaskForm):
     SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
     Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
-
+    @property
+    def cechy(self):
+        return [self.WW, self.US, self.S, self.Wt,self.I,
+                self.Zw,self.Zr, self.Int,self.SW, self.Ogd]
     @property
     def fields(self):
         return []
@@ -328,4 +345,40 @@ class CreationFormHalfing(FlaskForm):
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
+
+from flask_wtf import FlaskForm
+from wtforms import RadioField, IntegerField, SubmitField
+from wtforms.validators import Optional
+
+class AppearanceForm(FlaskForm):
+    wlosy = RadioField('Jaki kolor włosów będzie miała Twoja postać?',
+                       choices=[], validators=[Optional()])
+    oczy = RadioField('Jakie oczy będzie miała Twoja postać?',
+                      choices=[], validators=[Optional()])
+    wzrost = IntegerField('Ile wzrostu ma Twoja postać?',
+                          validators=[Optional()])
+    finito = SubmitField('Finito')
+
+    def __init__(self, postac_dict, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.race = postac_dict['race']
+
+        # Importowanie danych w zależności od rasy
+        if self.race == "Wysoki elf":
+            from rasy.wysoki_elf import wlosy, oczy, wzrost
+        elif self.race == "Leśny elf":
+            from rasy.lesny_elf import wlosy, oczy, wzrost
+        elif self.race == "Krasnolud":
+            from rasy.khazad import wlosy, oczy, wzrost
+        elif self.race == "Niziołek":
+            from rasy.hobbit import wlosy, oczy, wzrost
+        elif self.race == "Człowiek":
+            from rasy.czlowiek import wlosy, oczy, wzrost
+        else:
+            wlosy, oczy, wzrost = {}, {}, 0
+
+        # Ustawienie wyborów dla pól RadioField
+        self.wlosy.choices = [(key, value) for key, value in wlosy.items()]
+        self.oczy.choices = [(key, value) for key, value in oczy.items()]
+
 

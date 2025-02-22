@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 from strona.forms import (CreationFormOne, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
-                          CreationFormWoodElf, CreationFormHalfing)
+                          CreationFormWoodElf, CreationFormHalfing, AppearanceForm)
 from generator import Postac, PostacTalentyIUmiejki
 
 app = Flask(__name__)
@@ -70,32 +70,33 @@ def two():
         postac.add_cechy()
         postac.modify_traits_from_talents()
         postac.develop_traits()
-
-
-
         postac_dict2 = postac.generate_json_readable_output()
 
         if form.dalej.data:
             #przekazujemy wpisane wartości do strony trzeciej TBC
-            #session['postac_dict2'] = postac_dict2
+            session['postac_dict2'] = postac_dict2
             return redirect(url_for('three'))
         if form.losuj_reszte.data:
             # przekazujemy wpisane wartości do strony wyników TBC
-            #session['postac_dict2'] = postac_dict2
+            session['postac_dict2'] = postac_dict2
             return redirect(url_for('wyniki'))
 
     return render_template('form_two.html',
                            postac_dict=postac_dict, form=form)
+
+
+@app.route('/three', methods=['GET', 'POST'])
+def three():
+    postac_dict2 = session.get('postac_dict2')
+    form = AppearanceForm(postac_dict2)
+
+    return render_template('form_three.html', form=form)
 
 @app.route('/result', methods=['GET'])
 def wyniki():
 
 
     return render_template('result.html')
-
-@app.route('/three', methods=['GET', 'POST'])
-def three():
-    return render_template('form_three.html')
 
 
 if __name__ == '__main__':

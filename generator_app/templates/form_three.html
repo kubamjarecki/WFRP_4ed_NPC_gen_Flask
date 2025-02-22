@@ -2,50 +2,59 @@
 <html lang="pl">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Generator Postaci WFRP</title>
-    <!-- Bootstrap 4 CSS -->
-    <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Wygląd Postaci</title>
     <style>
-        body {
-            background-color: #1c1c1c;  /* Ciemne tło */
-            color: #eaeaea;             /* Jasny tekst */
+        /* Ustawienie elementów RadioField w jednej linii */
+        .radio-group {
+            display: flex;
+            gap: 20px; /* Odstępy między grupami pól */
+            margin-bottom: 20px; /* Odstęp między sekcjami */
         }
-        h1 {
-            color: #d11a2a;             /* Krwista czerwień */
-            font-family: 'Georgia', serif;
-            text-shadow: 2px 2px #000;
-        }
-        .form-check-label {
-            color: #eaeaea;
-        }
-        .form-check-input:checked + .form-check-label {
-            color: #ff6f00;             /* Ognisty pomarańcz */
-        }
-        .btn-primary {
-            background-color: #d11a2a;  /* Krwista czerwień */
-            border-color: #a31420;
-        }
-        .btn-primary:hover {
-            background-color: #ff6f00;  /* Ognisty pomarańcz */
-            border-color: #d35400;
+
+        .radio-item {
+            display: flex;
+            flex-direction: column; /* Ustawienie opcji w pionie */
+            align-items: center;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">TBC</h1>
+    <h1>Ustawienia Wyglądu Postaci</h1>
 
-    </div>
+    <form method="POST" action="{{ url_for('two') }}">
+        {{ form.hidden_tag() }}
 
-    <!-- Bootstrap 4 JS + jQuery + Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        crossorigin="anonymous"></script>
+        <!-- Kolor włosów -->
+        <p>{{ form.wlosy.label }}</p>
+        <div class="radio-group">
+            {% for subfield in form.wlosy %}
+                <div class="radio-item">
+                    {{ subfield() }}
+                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Kolor oczu -->
+        <p>{{ form.oczy.label }}</p>
+        <div class="radio-group">
+            {% for subfield in form.oczy %}
+                <div class="radio-item">
+                    {{ subfield() }}
+                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Wzrost -->
+        <p>{{ form.wzrost.label }}</p>
+        {{ form.wzrost() }}
+
+        <!-- Przycisk Finito -->
+        <div>
+            {{ form.finito() }}
+        </div>
+
+    </form>
 </body>
 </html>
