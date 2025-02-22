@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, request, session
-from strona.forms import (CreationFormOne, CreationFormTwo, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
+from strona.forms import (CreationFormOne, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
                           CreationFormWoodElf, CreationFormHalfing)
 from generator import Postac, PostacTalentyIUmiejki
 
@@ -16,6 +16,8 @@ def formularz():
         postac.give_experience()
         postac.draw_talents()
         postac.get_profession_traits_and_add_to_character()
+        postac.unpack_profession_talents()
+
         postac_dict = postac.generate_json_readable_output()
 
 
@@ -51,7 +53,10 @@ def two():
 
     ## GUZIKI
     if form.validate_on_submit():
+        #logika losowania
         if form.dalej.data:
+
+            return redirect(url_for('three'))
             if form.losuj.data:
                 #logika losowania TBC
                 return redirect(url_for('three'))

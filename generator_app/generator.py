@@ -24,7 +24,8 @@ class Postac:
         self.wyp = None
         self.waga = None
         self.talents = []
-        self.skills_to_choose = []
+        self.skills = {}
+        self.cechy = {}
         self.tabela_losowych_talentow = {
             1: 'Atrakcyjny', 2: 'Atrakcyjny', 3: 'Atrakcyjny', 4: 'Bardzo Silny', 5: 'Bardzo Silny',
             6: 'Bardzo Silny', 7: 'Błękitna Krew', 8: 'Błękitna Krew', 9: 'Błyskotliwość', 10: 'Błyskotliwość',
@@ -74,15 +75,17 @@ class Postac:
         ### pobieramy rzeczy zależne od rasy ######
         ###########################################
         if self.race == "Wysoki elf":
-            from rasy.wysoki_elf import losowanie_imienia, profesje, talentyx
+            from rasy.wysoki_elf import losowanie_imienia, profesje, talentyx, cechy
         if self.race == "Leśny elf":
-            from rasy.lesny_elf import losowanie_imienia, profesje, talentyx
+            from rasy.lesny_elf import losowanie_imienia, profesje, talentyx, cechy
         if self.race == "Krasnolud":
-            from rasy.khazad import losowanie_imienia, profesje, talentyx
+            from rasy.khazad import losowanie_imienia, profesje, talentyx, cechy
         if self.race == "Niziołek":
-            from rasy.hobbit import losowanie_imienia, profesje, talentyx
+            from rasy.hobbit import losowanie_imienia, profesje, talentyx, cechy
         if self.race == "Człowiek":
-            from rasy.czlowiek import losowanie_imienia, profesje, talentyx
+            from rasy.czlowiek import losowanie_imienia, profesje, talentyx, cechy
+
+        self.cechy = cechy
 
         self.talenty_lista_liczba=talentyx
 
@@ -136,6 +139,7 @@ class Postac:
                     break
 
 
+
     def get_profession_traits_and_add_to_character(self):
         folder = 'profesje'
         file = self.profession.lower()
@@ -151,9 +155,22 @@ class Postac:
         self.status=profesja_variables.status,
         self.rozwiniecia_cech=profesja_variables.rozwiniecia_cech,
         self.slownik_umiejetnosci_oraz_levelu=profesja_variables.slownik_umiejetnosci_oraz_levelu,
-        self.talenty=profesja_variables.talenty,
+        self.slownik_talentow_i_level=profesja_variables.talenty,
         self.wyp=profesja_variables.wyp,
         self.waga=profesja_variables.waga
+
+    def unpack_profession_talents(self):
+        for key, value in self.slownik_talentow_i_level.items():
+            if (value + self.level) > 0:
+                self.talents.append(key)
+
+
+    def unpack_profession_skills(self):
+        for key, value in self.slownik_umiejetnosci_oraz_levelu.items():
+            val = value + self.level
+            if val > 0:
+                v=5*val
+                self.talents[key]:v
 
 
     def generate_json_readable_output(self):
@@ -172,8 +189,8 @@ class Postac:
             "nazwa_profesji": self.nazwa_profesji,
             "status": self.status,
             "rozwiniecia_cech": self.rozwiniecia_cech,
-            "slownik_umiejetnosci_oraz_levelu": self.slownik_umiejetnosci_oraz_levelu,
-            'talenty_lista_liczba':self.talenty_lista_liczba
+            "umiejetnosci": self.skills,
+            'talenty':self.talenty
         }
 
 
@@ -182,38 +199,28 @@ class Postac:
 
 
 class PostacTalentyIUmiejki:
-    def __init__(self, postac_slownik):
+    def __init__(self, postac_slownik, form):
         self.race = postac_slownik['rasa']
         self.profession = postac_slownik['profesja']
         self.name = postac_slownik['imie']
         self.sex = postac_slownik['plec']
         self.level = postac_slownik['poziom']
+        self.talenty =postac_slownik['talenty']
+        self.skills = postac_slownik['skills']
+        self.form = form
+        #self.cechy = postac_slownik['']
+
+    def add_talents(self):
+        for field in self.form.fields:
+            self.talenty.append(field.data)
+
+    def add_skills(self):
+        for skill in self.form.pola_umiejek5.data:
+            if skill in self.skills:
+                self.skills =+ 5
+            else:
+                self.skills[skill]:5
 
 
 
-    def draw_random_talents(self):
-        if isinstance(self.talenty_lista[-1], int):
-            while True:
-                liczba = self.talenty_lista[-1]
-                los = random.sample(range(1, 100), liczba)
-                for i in los:
-                    self.talents.append(self.tabela_losowych_talentów[i])
-                if len(self.talents) == len(set(self.talents)):
-                    self.talenty_lista.pop()
-                    break
-                else:
-                    self.talents = []
 
-
-
-    # def generate_talenty_i_umiejki(self):
-    #     if self.race == "Wysoki elf":
-    #         from rasy.wysoki_elf import
-    #     if self.race == "Leśny elf":
-    #         from rasy.lesny_elf import losowanie_imienia, profesje
-    #     if self.race == "Krasnolud":
-    #         from rasy.khazad import losowanie_imienia, profesje
-    #     if self.race == "Niziołek":
-    #         from rasy.hobbit import losowanie_imienia, profesje
-    #     if self.race == "Człowiek":
-    #         from rasy.czlowiek import losowanie_imienia, profesje

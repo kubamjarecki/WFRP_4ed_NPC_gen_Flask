@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, RadioField, SelectField, IntegerField, BooleanField
-from wtforms.validators import NumberRange
+from wtforms import (StringField, SubmitField, RadioField, SelectField, IntegerField, BooleanField, widgets,
+                     SelectMultipleField)
+from wtforms.validators import NumberRange, ValidationError
 
 
 
@@ -60,60 +61,9 @@ class CreationFormOne(FlaskForm):
     dalej = SubmitField('Dalej') #render_kw= {"class": "btn btn-primary mr-3"})
     losuj_reszte = SubmitField('Losuj Resztę') #render_kw={"class": "btn btn-primary"})
 
-
-class CreationFormTwo(FlaskForm):
-    def __init__(self, dict, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.dict = dict
-        self.choosable_talent_list = dict['talenty_lista_liczba']
-        self.count = len(self.choosable_talent_list)
-
-        # Debugowanie: sprawdzenie ile mamy talentów
-        print(f"Liczba talentów: {self.count}")
-
-        # Dynamiczne tworzenie dropdownów
-        for i in range(self.count):
-            options = self.choosable_talent_list[i]
-            talent_field_name = f'talent_{i+1}'
-            field = SelectField(
-                f'Talent {i+1}',
-                choices=[(option, option) for option in options],
-                #render_kw={'id': f'talent_{i+1}'}  # Ustawienie ID ręcznie
-            )
-            # Dodanie pola do formularza przy użyciu _fields
-            field.id = talent_field_name
-            field_name = f'talent_{i+1}'
-            self._fields[field_name] = field
-
-
-
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
-
-    losuj = BooleanField('Losuj', default=False)
-
-    dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
-
-
-    #######################################
-    ##### osobne formularze ###############
-    #######################################
-
-
-
-
-
-
-
+def validate_choices(form, field):
+    if not (len(field.data) == 3):
+        raise ValidationError("Musisz wybrać dokładnie 3 opcje.")
 
 class CreationFormDvarf(FlaskForm):
     #cechy
@@ -139,6 +89,35 @@ class CreationFormDvarf(FlaskForm):
         return [self.field_1, self.field_2]
 
     #Umiejki
+    umiejki = ["Broń Biała (WW) (Podstawowa)",
+               "Język (Int) (Khazalid)",
+               "Opanowanie (SW)",
+               "Mocna Głowa (Wt)",
+               "Rzemiosło (Zr) (Dowolne)",
+               "Wiedza (Int) (Geologia)",
+               "Wiedza (Int) (Krasnoludy)",
+               "Wiedza (Int) (Metalurgia)",
+               "Wycena (Int)",
+               "Występy (Ogd) (Gawędziarstwo)",
+               "Zastraszanie (S)"]
+
+    skill_choices = []
+    for skill in umiejki:
+        tupel = (skill, skill)
+        skill_choices.append(tupel)
+
+    pola_umiejek5 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+    pola_umiejek3 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+
+    # guziki
 
 
     losuj = BooleanField('Losuj', default=False)
@@ -146,7 +125,7 @@ class CreationFormDvarf(FlaskForm):
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
 
-    # Talenty
+
 
 
 
@@ -176,11 +155,31 @@ class CreationFormWoodElf(FlaskForm):
         return [self.field_1, self.field_2]
 
     #Umiejki
+    umiejki = ["Atletyka (Zw)", "Broń Biała (WW) (Podstawowa)", "Broń Zasięgowa (US) (Łuk)", "Język (Int) (Eltharin)",
+               "Odporność (Wt)", "Percepcja (I)", "Skradanie (Zw)", "Sztuka Przetrwania (Int)", "Tropienie (I)",
+               "Wspinaczka (S)", "Występy (Ogd) (Śpiewanie)", "Zastraszanie (S)"]
+
+    skill_choices = []
+    for skill in umiejki:
+        tupel = (skill, skill)
+        skill_choices.append(tupel)
+
+    pola_umiejek5 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+    pola_umiejek3 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+
+    #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
 
-    # Talenty
 
 
 class CreationFormHighElf(FlaskForm):
@@ -212,13 +211,36 @@ class CreationFormHighElf(FlaskForm):
         return [self.field_1, self.field_2]
 
     # Umiejki
+    umiejki = ["Broń Biała (WW) (Podstawowa)", "Broń Zasięgowa (US) (Łuk)", "Dowodzenie (Ogd)",
+               "Język (Int) (Eltharin)", "Muzyka (Zr)(Dowolny instrument)", "Nawigacja (I)", "Opanowanie (SW)",
+               "Pływanie (S)", "Percepcja (I)", "Wycena (Int)", "Występy (Ogd) (Śpiewanie)", "Żeglarstwo (Zw)"]
+
+    skill_choices = []
+    for skill in umiejki:
+        tupel = (skill, skill)
+        skill_choices.append(tupel)
+
+    pola_umiejek5 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+    pola_umiejek3 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+                                        )
+
+    # guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
 
-    # Talenty
 
 class CreationFormMan(FlaskForm):
+    def validate_choices(form, field):
+        if not (len(field.data) == 3):
+            raise ValidationError("Musisz wybrać dokładnie 3 opcje.")
     # cechy
     WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
     US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
@@ -241,7 +263,27 @@ class CreationFormMan(FlaskForm):
         return [self.field_1]
 
     # Umiejki
+    umiejki = ["Broń Biała (WW) (Podstawowa)", "Broń Zasięgowa (US) (Łuk)", "Charyzma (Ogd) ", "Dowodzenie (Ogd)",
+               "Język (Int) (bretoński)", "Język (Int) (Jałowej Krainy)", "Opanowanie (SW)",
+               "Opieka nad Zwierzętami (Int)", "Plotkowanie (Ogd)", "Targowanie (Ogd)", "Wiedza (Int) (Reikland)",
+               "Wycena (Int)"]
+    skill_choices = []
+    for skill in umiejki:
+        tupel = (skill, skill)
+        skill_choices.append(tupel)
 
+    pola_umiejek5 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+    )
+    pola_umiejek3 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                       option_widget=widgets.CheckboxInput(),
+                                       widget=widgets.ListWidget(prefix_label=False),
+                                       validators=[validate_choices]
+    )
+
+    #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')
@@ -266,7 +308,27 @@ class CreationFormHalfing(FlaskForm):
         return []
 
     # Umiejki
+    umiejki = ["Charyzma (Ogd) ", "Hazard (Int)", "Intuicja (I)", "Język (Int) (Krainy Zgromadzenia)",
+               "Mocna Głowa (Wt)", "Percepcja (I)", "Rzemiosło (Zr) (Kucharz)", "Skradanie (Zw) (Dowolne)",
+               "Targowanie (Ogd)", "Unik (Zw)", "Wiedza (Int) (Reikland)", "Zwinne Palce (Zr)"]
 
+    skill_choices = []
+    for skill in umiejki:
+        tupel = (skill, skill)
+        skill_choices.append(tupel)
+
+    pola_umiejek5 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                        option_widget=widgets.CheckboxInput(),
+                                        widget=widgets.ListWidget(prefix_label=False),
+                                        validators=[validate_choices]
+    )
+    pola_umiejek3 = SelectMultipleField('Wybierz opcje:', choices=skill_choices,
+                                       option_widget=widgets.CheckboxInput(),
+                                       widget=widgets.ListWidget(prefix_label=False),
+                                       validators=[validate_choices]
+    )
+
+    #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
     losuj_reszte = SubmitField('Losuj Resztę')

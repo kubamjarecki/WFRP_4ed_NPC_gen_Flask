@@ -94,20 +94,48 @@
 
         <!-- Checkbox Losuj -->
         <div>
+
             {{ form.losuj(id="losuj") }}
             <label for="losuj">Losuj</label>
         </div>
-        <!-- Dropdown umiejętności -->
+
+        <!-- Dropdown talentów -->
         <div class="flex-row">
             <h3>Wybierz talenty:</h3>
             {% for field in form.fields %}
                 {{ field(class="form-select", id=field.id) }}
             {% endfor %}
         </div>
-
+        <!-- CHeckboxy umiejek -->
+        <div>
+            <h3>Wybierz trzy umiejętności o wartości 5</h3>
+            <ul>
+            {% for subfield in form.pola_umiejek5 %}
+                <li>
+                    {{ subfield }} {{ subfield.label.text }}
+                </li>
+            {% endfor %}
+            </ul>
+            {% if form.pola_umiejek3.errors %}
+                <>{{ form.pola_umiejek3.errors[0] }}</p>
+            {% endif %}
+        </div>
+                <div>
+            <h3>Wybierz trzy umiejętności o wartości 3</h3>
+            <ul>
+            {% for subfield in form.pola_umiejek3 %}
+                <li>
+                    {{ subfield }} {{ subfield.label.text }}
+                </li>
+            {% endfor %}
+            </ul>
+            {% if form.pola_umiejek5.errors %}
+                <>{{ form.pola_umiejek5.errors[0] }}</p>
+            {% endif %}
+        </div>
 
         <!-- Debugowanie: Sprawdzenie listy dynamicznych pól -->
-        <p>Polska formularza: {{ form._fields }}</p>
+        <!---<p>Polska formularza: {{ form._fields }}</p> -->
 
         <!-- Przyciski -->
         <div>
