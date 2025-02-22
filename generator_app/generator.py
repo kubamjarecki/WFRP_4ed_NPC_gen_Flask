@@ -20,7 +20,6 @@ class Postac:
         self.status = None
         self.rozwiniecia_cech = None
         self.slownik_umiejetnosci_oraz_levelu = None
-        self.talenty = None
         self.wyp = None
         self.waga = None
         self.talents = []
@@ -52,6 +51,7 @@ class Postac:
             94: 'Wytwórca (Dowolny)', 95: 'Zimna Krew', 96: 'Zimna Krew', 97: 'Zimna Krew', 98: 'Zręczny',
             99: 'Zręczny', 100: 'Zręczny'
         }
+        self.slownik_talentow_i_level = {}
 
 
     def generate_race_name_profession(self):
@@ -121,23 +121,14 @@ class Postac:
 
     def draw_talents(self):
         if isinstance(self.talenty_lista_liczba[-1], int):
-            while True:
-                liczba = self.talenty_lista_liczba[-1]
-                los = random.sample(range(1, 100), liczba)
-                for i in los:
-                    self.talents.append(self.tabela_losowych_talentow[i])
-                if len(self.talents) == len(set(self.talents)):
-                    self.talenty_lista_liczba.pop()
-                    break
+            liczba = self.talenty_lista_liczba[-1]
+            while liczba > 0:
+                los = random.randint(1, 100)
+                if self.tabela_losowych_talentow[los] not in self.talents:
+                    self.talents.append(self.tabela_losowych_talentow[los])
+                    liczba -= 1
                 else:
-                    self.talents = []
-
-            while isinstance(self.talenty_lista_liczba[-1], str):
-                self.talents.append(self.talenty_lista_liczba[-1])
-                self.talenty_lista_liczba.pop()
-                if len(self.talenty_lista_liczba)==0:
-                    break
-
+                    continue
 
 
     def get_profession_traits_and_add_to_character(self):
@@ -154,8 +145,9 @@ class Postac:
         self.nazwa_profesji=profesja_variables.nazwa_profesji,
         self.status=profesja_variables.status,
         self.rozwiniecia_cech=profesja_variables.rozwiniecia_cech,
-        self.slownik_umiejetnosci_oraz_levelu=profesja_variables.slownik_umiejetnosci_oraz_levelu,
-        self.slownik_talentow_i_level=profesja_variables.talenty,
+        self.slownik_umiejetnosci_oraz_levelu=profesja_variables.slownik_umiejetnosci_oraz_levelu
+
+        self.slownik_talentow_i_level = profesja_variables.talenty
         self.wyp=profesja_variables.wyp,
         self.waga=profesja_variables.waga
 
@@ -167,10 +159,11 @@ class Postac:
 
     def unpack_profession_skills(self):
         for key, value in self.slownik_umiejetnosci_oraz_levelu.items():
+            #print(key, value)
             val = value + self.level
             if val > 0:
                 v=5*val
-                self.talents[key]:v
+                self.skills[key]=v
 
 
     def generate_json_readable_output(self):
@@ -178,20 +171,13 @@ class Postac:
         ######### tworzę słownik do przekazania do następnego widoku ###############
         ############################################################################
         postac_slownik = {
-            "imie": self.name,
-            "plec": self.sex,
-            "rasa": self.race,
-            "profesja": self.profession,
-            "poziom": self.level,
-            "talenty": self.talents,
-            "doswiadczenie": self.experience,
-            "klasa": self.klasa,
-            "nazwa_profesji": self.nazwa_profesji,
-            "status": self.status,
-            "rozwiniecia_cech": self.rozwiniecia_cech,
-            "umiejetnosci": self.skills,
-            'talenty':self.talenty
         }
+
+        for attr, value in vars(self).items():
+            if attr != "form":
+                #print(f"{attr}: {value}")
+                postac_slownik[attr] = value
+
 
 
         return postac_slownik
@@ -200,26 +186,41 @@ class Postac:
 
 class PostacTalentyIUmiejki:
     def __init__(self, postac_slownik, form):
-        self.race = postac_slownik['rasa']
-        self.profession = postac_slownik['profesja']
-        self.name = postac_slownik['imie']
-        self.sex = postac_slownik['plec']
-        self.level = postac_slownik['poziom']
-        self.talenty =postac_slownik['talenty']
+        self.race = postac_slownik['race']
+        self.profession = postac_slownik['profession']
+        self.name = postac_slownik['name']
+        self.sex = postac_slownik['sex']
+        self.level = postac_slownik['level']
+        self.talents =postac_slownik['talents']
         self.skills = postac_slownik['skills']
         self.form = form
-        #self.cechy = postac_slownik['']
+        self.cechy = postac_slownik['cechy']
 
     def add_talents(self):
         for field in self.form.fields:
-            self.talenty.append(field.data)
+            self.talents.append(field.data)
 
     def add_skills(self):
         for skill in self.form.pola_umiejek5.data:
             if skill in self.skills:
-                self.skills =+ 5
+                self.skills[skill] += 5
             else:
-                self.skills[skill]:5
+                self.skills[skill]=5
+        for skill in self.form.pola_umiejek3.data:
+            if skill in self.skills:
+                self.skills[skill] += 3
+            else:
+                self.skills[skill]=3
+
+
+    def generate_json_readable_output(self):
+        postac_slownik = {}
+        for attr, value in vars(self).items():
+            if attr != "form":
+                #print(f"{attr}: {value}")
+                postac_slownik[attr] = value
+
+        return postac_slownik
 
 
 

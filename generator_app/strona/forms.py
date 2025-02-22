@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, RadioField, SelectField, IntegerField, BooleanField, widgets,
                      SelectMultipleField)
-from wtforms.validators import NumberRange, ValidationError
+from wtforms.validators import NumberRange, ValidationError, Optional
 
 
 
@@ -67,16 +67,16 @@ def validate_choices(form, field):
 
 class CreationFormDvarf(FlaskForm):
     #cechy
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+    WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[Optional(), NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[Optional(), NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[Optional(), NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[Optional(), NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[Optional(), NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
     #Talenty
     field_1 = SelectField('Talent 1',
@@ -131,16 +131,16 @@ class CreationFormDvarf(FlaskForm):
 
 class CreationFormWoodElf(FlaskForm):
     #cechy
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+    WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[Optional(), NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[Optional(), NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[Optional(), NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[Optional(), NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[Optional(), NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
     #Talenty
     field_1 = SelectField('Talent 1',
@@ -184,16 +184,16 @@ class CreationFormWoodElf(FlaskForm):
 
 class CreationFormHighElf(FlaskForm):
     # cechy
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+    WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[Optional(), NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[Optional(), NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[Optional(), NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[Optional(), NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[Optional(), NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
     # Talenty
     talenty2 = ["Szósty Zmysł", "Percepcja Magiczna"]
@@ -242,16 +242,16 @@ class CreationFormMan(FlaskForm):
         if not (len(field.data) == 3):
             raise ValidationError("Musisz wybrać dokładnie 3 opcje.")
     # cechy
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+    WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[Optional(), NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[Optional(), NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[Optional(), NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[Optional(), NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[Optional(), NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
     # Talenty
     field_1 = SelectField('Talent 1',
@@ -291,16 +291,16 @@ class CreationFormMan(FlaskForm):
 
 class CreationFormHalfing(FlaskForm):
     # cechy
-    WW = IntegerField('WW', validators=[NumberRange(min=2, max=20)])
-    US = IntegerField('US', validators=[NumberRange(min=2, max=20)])
-    S = IntegerField('S', validators=[NumberRange(min=2, max=20)])
-    Wt = IntegerField('Wt', validators=[NumberRange(min=2, max=20)])
-    I = IntegerField('I', validators=[NumberRange(min=2, max=20)])
-    Zw = IntegerField('Zw', validators=[NumberRange(min=2, max=20)])
-    Zr = IntegerField('Zr', validators=[NumberRange(min=2, max=20)])
-    Int = IntegerField('Int', validators=[NumberRange(min=2, max=20)])
-    SW = IntegerField('SW', validators=[NumberRange(min=2, max=20)])
-    Ogd = IntegerField('Ogd', validators=[NumberRange(min=2, max=20)])
+    WW = IntegerField('WW', validators=[Optional(), NumberRange(min=2, max=20)])
+    US = IntegerField('US', validators=[Optional(), NumberRange(min=2, max=20)])
+    S = IntegerField('S', validators=[Optional(), NumberRange(min=2, max=20)])
+    Wt = IntegerField('Wt', validators=[Optional(), NumberRange(min=2, max=20)])
+    I = IntegerField('I', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zw = IntegerField('Zw', validators=[Optional(), NumberRange(min=2, max=20)])
+    Zr = IntegerField('Zr', validators=[Optional(), NumberRange(min=2, max=20)])
+    Int = IntegerField('Int', validators=[Optional(), NumberRange(min=2, max=20)])
+    SW = IntegerField('SW', validators=[Optional(), NumberRange(min=2, max=20)])
+    Ogd = IntegerField('Ogd', validators=[Optional(), NumberRange(min=2, max=20)])
 
 
     @property

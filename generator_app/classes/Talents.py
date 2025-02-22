@@ -42,6 +42,7 @@ class Talents:
                 if len(self.talents) == len(set(self.talents)):
                     character.race.talenty_z_liczba_losowych_lista_list.pop()
                     break
+
     
     # talenty wybieralne od rasy
     def choosable_talents_from_race(self, character):

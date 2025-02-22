@@ -52,12 +52,13 @@
 </head>
 <body>
     <h1>
-        <p>{{ postac_dict['imie'] }} to {{ postac_dict['rasa'] }}, {{ postac_dict['plec'] }}.</p>
-        <p>Jest to {{ postac_dict['doswiadczenie'] }} {{ postac_dict['profesja'] }}.</p>
+        <p>{{ postac_dict['name'] }} to {{ postac_dict['race'] }}, {{ postac_dict['sex'] }}.</p>
+        <p>Jest to {{ postac_dict['experience'] }} {{ postac_dict['profession'] }}.</p>
     </h1>
 
     <!-- Formularz -->
     <form method="POST" action="{{ url_for('two') }}">
+        {{ form.hidden_tag() }}
         <div><h3>Wpisz rzuty. Bądź zaznacz 'Losuj', jeśli mają być wylosowane</h3></div>
         <div class="flex-row">
 

@@ -12,11 +12,14 @@ def formularz():
     if form.validate_on_submit():
         postac = Postac(form)
 
+
         postac.generate_race_name_profession()
         postac.give_experience()
         postac.draw_talents()
         postac.get_profession_traits_and_add_to_character()
         postac.unpack_profession_talents()
+        postac.unpack_profession_skills()
+
 
         postac_dict = postac.generate_json_readable_output()
 
@@ -32,56 +35,62 @@ def formularz():
 
 @app.route('/two', methods=['GET', 'POST'])
 def two():
-
     postac_dict = session.get('postac_dict')
-
-    postac = PostacTalentyIUmiejki(postac_dict)
     #wybór formularza
-    if postac_dict['rasa'] == 'Krasnolud':
+    if postac_dict['race'] == 'Krasnolud':
         form = CreationFormDvarf()
-    if postac_dict['rasa'] == 'Człowiek':
+    if postac_dict['race'] == 'Człowiek':
         form = CreationFormMan()
-    if postac_dict['rasa'] == 'Wysoki elf':
+    if postac_dict['race'] == 'Wysoki elf':
         form=CreationFormHighElf()
-    if postac_dict['rasa'] == 'Leśny elf':
+    if postac_dict['race'] == 'Leśny elf':
         form = CreationFormWoodElf()
-    if postac_dict['rasa'] == 'Niziołek':
+    if postac_dict['race'] == 'Niziołek':
         form= CreationFormHalfing()
-    # else:
-    #     form = CreationFormTwo(postac_dict)
-    #     print(dir(form))
 
-    ## GUZIKI
+    postac = PostacTalentyIUmiejki(postac_dict, form)
+
+    ## po kliknięciu
     if form.validate_on_submit():
-        #logika losowania
-        if form.dalej.data:
+        # Sprawdzamy, czy wybrane umiejętności w obu polach są te same
+        selected_5 = set(form.pola_umiejek5.data)  # Zbieramy dane z pola pola_umiejek5
+        selected_3 = set(form.pola_umiejek3.data)  # Zbieramy dane z pola pola_umiejek3
 
+        # Sprawdzamy, czy nie ma wspólnych umiejętności
+        if not selected_5.isdisjoint(selected_3):
+            form.pola_umiejek5.errors.append('Nie możesz wybrać tych samych umiejętności w obu polach!')
+            form.pola_umiejek3.errors.append('Nie możesz wybrać tych samych umiejętności w obu polach!')
+            return render_template('form_two.html', postac_dict=postac_dict, form=form)
+
+        ## wywołujemy funkcje generatora
+        postac.add_talents()
+        print(postac.skills)
+        print(form.pola_umiejek5.data)
+        postac.add_skills()
+        print(postac.skills)
+        postac_dict2 = postac.generate_json_readable_output()
+
+        if form.dalej.data:
+            #przekazujemy wpisane wartości do strony trzeciej TBC
+            #session['postac_dict2'] = postac_dict2
             return redirect(url_for('three'))
-            if form.losuj.data:
-                #logika losowania TBC
-                return redirect(url_for('three'))
-            else:
-                #przekazujemy wpisane wartości do strony trzeciej TBC
-                return redirect(url_for('three'))
         if form.losuj_reszte.data:
-            if form.losuj.data:
-                #logika losowania reszty TBC
-                return redirect(url_for('wyniki'))
-            else:
-                # przekazujemy wpisane wartości do strony wyników TBC
-                return redirect(url_for('wyniki'))
+            # przekazujemy wpisane wartości do strony wyników TBC
+            #session['postac_dict2'] = postac_dict2
+            return redirect(url_for('wyniki'))
 
     return render_template('form_two.html',
                            postac_dict=postac_dict, form=form)
 
 @app.route('/result', methods=['GET'])
 def wyniki():
-    postac_dict = session.get('postac_dict')
-    imie = postac_dict['imie']
-    rasa = postac_dict['rasa']
 
 
-    return render_template('result.html', postac_dict=postac_dict)
+    return render_template('result.html')
+
+@app.route('/three', methods=['GET', 'POST'])
+def three():
+    return render_template('form_three.html')
 
 
 if __name__ == '__main__':
