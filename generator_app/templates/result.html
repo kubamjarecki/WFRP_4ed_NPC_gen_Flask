@@ -1,51 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Generator Postaci WFRP</title>
-    <!-- Bootstrap 4 CSS -->
-    <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #1c1c1c;  /* Ciemne tło */
-            color: #eaeaea;             /* Jasny tekst */
-        }
-        h1 {
-            color: #d11a2a;             /* Krwista czerwień */
-            font-family: 'Georgia', serif;
-            text-shadow: 2px 2px #000;
-        }
-        .form-check-label {
-            color: #eaeaea;
-        }
-        .form-check-input:checked + .form-check-label {
-            color: #ff6f00;             /* Ognisty pomarańcz */
-        }
-        .btn-primary {
-            background-color: #d11a2a;  /* Krwista czerwień */
-            border-color: #a31420;
-        }
-        .btn-primary:hover {
-            background-color: #ff6f00;  /* Ognisty pomarańcz */
-            border-color: #d35400;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postać - {{ postac['Imię'] }}</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">TBC</h1>
 
+<div class="container">
+    <h1>Postać - {{ postac['Imię'] }}</h1>
+
+    <!-- Sekcja z danymi podstawowymi -->
+    <div class="section">
+        <h2>Podstawowe Informacje</h2>
+        <p><strong>Imię:</strong> {{ postac['Imię'] }}</p>
+        <p><strong>Rasa:</strong> {{ postac['Rasa'] }}</p>
+        <p><strong>Płeć:</strong> {{ postac['Płeć'] }}</p>
+        <p><strong>Profesja:</strong> {{ postac['Profesja'] }}</p>
+        <p><strong>Kariera:</strong> {{ postac['Ścieżka Kariery'] }}</p>
+        <p><strong>Wiek:</strong> {{ postac['Wiek'] }}</p>
+        <p><strong>Wzrost:</strong> {{ postac['Wzrost'] }}</p>
+        <p><strong>Kolor Włosów:</strong> {{ postac['Włosy'] }}</p>
+        <p><strong>Kolor Oczu:</strong> {{ postac['Oczy'] }}</p>
+        <p><strong>Żywotność:</strong> {{ postac.get('Żywotność', 'Brak danych') }}</p>
     </div>
 
-    <!-- Bootstrap 4 JS + jQuery + Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        crossorigin="anonymous"></script>
+    <!-- Sekcja z cechami -->
+    <div class="section">
+        <h2>Cechy</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>WW</th>
+                    <th>US</th>
+                    <th>S</th>
+                    <th>Wt</th>
+                    <th>I</th>
+                    <th>Zw</th>
+                    <th>Zr</th>
+                    <th>Int</th>
+                    <th>SW</th>
+                    <th>Ogd</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Wartości z 'Cechy' -->
+                <tr>
+                    <td>{{ postac['Cechy'].get('WW', '') }}</td>
+                    <td>{{ postac['Cechy'].get('US', '') }}</td>
+                    <td>{{ postac['Cechy'].get('S', '') }}</td>
+                    <td>{{ postac['Cechy'].get('Wt', '') }}</td>
+                    <td>{{ postac['Cechy'].get('I', '') }}</td>
+                    <td>{{ postac['Cechy'].get('Zw', '') }}</td>
+                    <td>{{ postac['Cechy'].get('Zr', '') }}</td>
+                    <td>{{ postac['Cechy'].get('Int', '') }}</td>
+                    <td>{{ postac['Cechy'].get('SW', '') }}</td>
+                    <td>{{ postac['Cechy'].get('Ogd', '') }}</td>
+                </tr>
+                <!-- Wartości z 'Cechy rozwinięcia' -->
+                <tr>
+                    <td>{{ postac['Cechy rozwinięcia'].get('WW', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('US', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('S', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('Wt', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('I', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('Zw', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('Zr', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('Int', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('SW', '') }}</td>
+                    <td>{{ postac['Cechy rozwinięcia'].get('Ogd', '') }}</td>
+                </tr>
+                <!-- Wartości z 'Cechy aktualne' -->
+                <tr>
+                    <td>{{ postac['Cechy aktualne'].get('WW', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('US', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('S', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('Wt', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('I', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('Zw', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('Zr', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('Int', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('SW', '') }}</td>
+                    <td>{{ postac['Cechy aktualne'].get('Ogd', '') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sekcja z umiejętnościami -->
+    <div class="section">
+        <h2>Umiejętności</h2>
+        {% if postac.get('Umiejętności') %}
+            <ul>
+                {% for skill, value in postac['Umiejętności'].items() %}
+                    <li><strong>{{ skill }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak umiejętności.</p>
+        {% endif %}
+    </div>
+
+    <!-- Sekcja z talentami -->
+    <div class="section">
+        <h2>Talenty</h2>
+        {% if postac.get('Talenty') %}
+            <ul>
+                {% for talent in postac['Talenty'] %}
+                    <li>{{ talent }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak talentów.</p>
+        {% endif %}
+    </div>
+
+    <!-- Sekcja z wyposażeniem -->
+    <div class="section">
+        <h2>Wyposażenie</h2>
+        {% if postac.get('Wyposażenie') %}
+            <ul>
+                {% for item in postac['Wyposażenie'] %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak wyposażenia.</p>
+        {% endif %}
+    </div>
+</div>
+
 </body>
 </html>

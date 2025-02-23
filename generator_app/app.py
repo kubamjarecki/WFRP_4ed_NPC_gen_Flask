@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 from strona.forms import (CreationFormOne, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
                           CreationFormWoodElf, CreationFormHalfing, AppearanceForm)
-from generator import Postac, PostacTalentyIUmiejki
+from generator import Postac, PostacTalentyIUmiejki, PostacFinito
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] ='dugsnaga'
@@ -89,14 +89,28 @@ def two():
 def three():
     postac_dict2 = session.get('postac_dict2')
     form = AppearanceForm(postac_dict2)
+    postac = PostacFinito(postac_dict2)
+
+    if form.validate_on_submit():
+        postac.get_eyes_hair_age_height(form)
+        postac.random_eyes_hair_age_height()
+        postac.unpack_profesji()
+        postac.rany()
+        postac.modify_skill_output()
+        output = postac.generate_output()
+
+        session['postac_dict3'] = output
+
+        return redirect(url_for('wyniki'))
 
     return render_template('form_three.html', form=form)
 
 @app.route('/result', methods=['GET'])
 def wyniki():
+    postac_dict3 = session.get('postac_dict3')
+    #print(postac_dict3)
 
-
-    return render_template('result.html')
+    return render_template('result.html', postac=postac_dict3)
 
 
 if __name__ == '__main__':

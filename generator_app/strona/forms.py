@@ -59,7 +59,7 @@ class CreationFormOne(FlaskForm):
     #### przyciski ##########
     #########################
     dalej = SubmitField('Dalej') #render_kw= {"class": "btn btn-primary mr-3"})
-    losuj_reszte = SubmitField('Losuj Resztę') #render_kw={"class": "btn btn-primary"})
+    losuj_reszte = SubmitField('Finito') #render_kw={"class": "btn btn-primary"})
 
 def validate_choices(form, field):
     if not (len(field.data) == 3):
@@ -128,7 +128,7 @@ class CreationFormDvarf(FlaskForm):
     losuj = BooleanField('Losuj', default=False)
 
     dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
+    losuj_reszte = SubmitField('Finito')
 
 class CreationFormWoodElf(FlaskForm):
     #cechy
@@ -184,7 +184,7 @@ class CreationFormWoodElf(FlaskForm):
     #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
+    losuj_reszte = SubmitField('Finito')
 
 class CreationFormHighElf(FlaskForm):
     # cechy
@@ -242,7 +242,7 @@ class CreationFormHighElf(FlaskForm):
     # guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
+    losuj_reszte = SubmitField('Finito')
 
 class CreationFormMan(FlaskForm):
     def validate_choices(form, field):
@@ -297,7 +297,7 @@ class CreationFormMan(FlaskForm):
     #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
+    losuj_reszte = SubmitField('Finito')
 
 class CreationFormHalfing(FlaskForm):
     # cechy
@@ -344,7 +344,7 @@ class CreationFormHalfing(FlaskForm):
     #guziki
     losuj = BooleanField('Losuj', default=False)
     dalej = SubmitField('Dalej')
-    losuj_reszte = SubmitField('Losuj Resztę')
+    losuj_reszte = SubmitField('Finito')
 
 from flask_wtf import FlaskForm
 from wtforms import RadioField, IntegerField, SubmitField
@@ -357,6 +357,8 @@ class AppearanceForm(FlaskForm):
                       choices=[], validators=[Optional()])
     wzrost = IntegerField('Ile wzrostu ma Twoja postać?',
                           validators=[Optional()])
+    wiek = IntegerField('Ile lat ma Twoja postać?',
+                          validators=[Optional()])
     finito = SubmitField('Finito')
 
     def __init__(self, postac_dict, *args, **kwargs):
@@ -365,20 +367,21 @@ class AppearanceForm(FlaskForm):
 
         # Importowanie danych w zależności od rasy
         if self.race == "Wysoki elf":
-            from rasy.wysoki_elf import wlosy, oczy, wzrost
+            from rasy.wysoki_elf import wlosy, oczy
         elif self.race == "Leśny elf":
-            from rasy.lesny_elf import wlosy, oczy, wzrost
+            from rasy.lesny_elf import wlosy, oczy
         elif self.race == "Krasnolud":
-            from rasy.khazad import wlosy, oczy, wzrost
+            from rasy.khazad import wlosy, oczy
         elif self.race == "Niziołek":
-            from rasy.hobbit import wlosy, oczy, wzrost
+            from rasy.hobbit import wlosy, oczy
         elif self.race == "Człowiek":
-            from rasy.czlowiek import wlosy, oczy, wzrost
+            from rasy.czlowiek import wlosy, oczy
         else:
             wlosy, oczy, wzrost = {}, {}, 0
 
         # Ustawienie wyborów dla pól RadioField
-        self.wlosy.choices = [(key, value) for key, value in wlosy.items()]
-        self.oczy.choices = [(key, value) for key, value in oczy.items()]
+
+        self.wlosy.choices = [(value, value) for value in set(wlosy.values())]
+        self.oczy.choices = [(value, value) for value in set(oczy.values())]
 
 

@@ -1,60 +1,18 @@
-<!doctype html>
-<html lang="pl">
-<head>
-    <meta charset="utf-8">
-    <title>Wygląd Postaci</title>
-    <style>
-        /* Ustawienie elementów RadioField w jednej linii */
-        .radio-group {
-            display: flex;
-            gap: 20px; /* Odstępy między grupami pól */
-            margin-bottom: 20px; /* Odstęp między sekcjami */
-        }
+<form method="POST" action="{{ url_for('three') }}">
+    {{ form.hidden_tag() }}
 
-        .radio-item {
-            display: flex;
-            flex-direction: column; /* Ustawienie opcji w pionie */
-            align-items: center;
-        }
-    </style>
-</head>
-<body>
-    <h1>Ustawienia Wyglądu Postaci</h1>
+    <!-- Twoje pola formularza -->
+    {{ form.wlosy.label }}<br>
+    {{ form.wlosy() }}<br>
 
-    <form method="POST" action="{{ url_for('two') }}">
-        {{ form.hidden_tag() }}
+    {{ form.oczy.label }}<br>
+    {{ form.oczy() }}<br>
 
-        <!-- Kolor włosów -->
-        <p>{{ form.wlosy.label }}</p>
-        <div class="radio-group">
-            {% for subfield in form.wlosy %}
-                <div class="radio-item">
-                    {{ subfield() }}
-                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
-                </div>
-            {% endfor %}
-        </div>
+    {{ form.wzrost.label }}<br>
+    {{ form.wzrost() }}<br>
 
-        <!-- Kolor oczu -->
-        <p>{{ form.oczy.label }}</p>
-        <div class="radio-group">
-            {% for subfield in form.oczy %}
-                <div class="radio-item">
-                    {{ subfield() }}
-                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
-                </div>
-            {% endfor %}
-        </div>
+    {{ form.wiek.label }}<br>
+    {{ form.wiek() }}<br>
 
-        <!-- Wzrost -->
-        <p>{{ form.wzrost.label }}</p>
-        {{ form.wzrost() }}
-
-        <!-- Przycisk Finito -->
-        <div>
-            {{ form.finito() }}
-        </div>
-
-    </form>
-</body>
-</html>
+    {{ form.finito() }}
+</form>
