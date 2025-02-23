@@ -14,7 +14,7 @@ class Postac:
         self.profession=form.profession.data
         self.level = form.level.data
         self.experience = None
-        self.talenty_lista_liczba = None
+        self.talenty_lista_liczba = []
         self.klasa = None
         self.nazwa_profesji = None
         self.status = None
