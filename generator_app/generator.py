@@ -53,7 +53,7 @@ class Postac:
         }
         self.slownik_talentow_i_level = {}
         self.equipment = []
-
+        #print(self.cechy)
 
     def generate_race_name_profession(self):
         if self.race == "Losowo":
@@ -121,6 +121,9 @@ class Postac:
         self.experience = doswiadczenie[str(self.level)]
 
     def draw_talents(self):
+        for element in self.talenty_lista_liczba:
+            if isinstance(element, str):
+                self.talents.append(element)
         if isinstance(self.talenty_lista_liczba[-1], int):
             liczba = self.talenty_lista_liczba[-1]
             while liczba > 0:
@@ -130,6 +133,7 @@ class Postac:
                     liczba -= 1
                 else:
                     continue
+
 
 
     def get_profession_traits_and_add_to_character(self):
@@ -209,7 +213,7 @@ class Postac:
         return postac_slownik
 
 class PostacTalentyIUmiejki:
-    def __init__(self, postac_slownik, form):
+    def __init__(self, postac_slownik, form=None):
         self.race = postac_slownik['race']
         self.profession = postac_slownik['profession']
         self.name = postac_slownik['name']
@@ -226,11 +230,20 @@ class PostacTalentyIUmiejki:
         self.equipment = postac_slownik['equipment']
         self.klasa = postac_slownik['klasa']
         self.nazwa_profesji = postac_slownik['nazwa_profesji']
-        print(f'Init {self.cechy}')
+        self.talenty_lista_liczba = postac_slownik['talenty_lista_liczba']
+        #print(f'Init {self.skills}')
 
     def add_talents(self):
         for field in self.form.fields:
             self.talents.append(field.data)
+
+
+    def add_choosable_talents_randomly(self):
+        for element in self.talenty_lista_liczba:
+            if isinstance(element, list):
+                losowy = random.choice(element)
+                self.talents.append(losowy)
+
 
     def add_skills(self):
         for skill in self.form.pola_umiejek5.data:
@@ -243,6 +256,43 @@ class PostacTalentyIUmiejki:
                 self.skills[skill] += 3
             else:
                 self.skills[skill]=3
+
+    def add_skills_randomly(self):
+        if self.race == "Wysoki elf":
+            from rasy.wysoki_elf import umiejki
+        if self.race == "Leśny elf":
+            from rasy.lesny_elf import umiejki
+        if self.race == "Krasnolud":
+            from rasy.khazad import umiejki
+        if self.race == "Niziołek":
+            from rasy.hobbit import umiejki
+        if self.race == "Człowiek":
+            from rasy.czlowiek import umiejki
+
+
+        #umiejki 5
+        a=3
+        while a >= 0:
+            skill = random.choice(umiejki)
+            umiejki.remove(skill)
+
+            if skill in self.skills:
+                self.skills[skill] += 5
+            else:
+                self.skills[skill]=5
+            a -= 1
+
+        #umiejki 3
+        while a >= 0:
+            rand = random.randint(0, len(umiejki))
+            skill = umiejki.pop(rand)
+            if skill in self.skill:
+                self.skills[skill] += 5
+            else:
+                self.skills[skill]=5
+            a -= 1
+
+
 
     def random_traits(self):
         rzuty = []
@@ -285,17 +335,6 @@ class PostacTalentyIUmiejki:
         else:
             self.wrote_traits()
 
-    def develop_traits(self):
-        for trait, level in self.traits_dev.items():
-            level += self.level
-            self.cechy_rozwiniete = self.cechy
-            if level > 0:
-                wart = level*5
-                self.cechy_rozwiniecia[trait] = wart
-                self.cechy_rozwiniete[trait] = self.cechy[trait] + wart
-
-        #print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
-
 
     def modify_traits_from_talents(self):
         if "Urodzony Wojownik" in self.talents:
@@ -321,7 +360,18 @@ class PostacTalentyIUmiejki:
 
         #print(f'talnety {self.cechy}')
 
+    def develop_traits(self):
+        for key, value in self.cechy.items():
+            self.cechy_rozwiniete[key] = value
 
+        for trait, level in self.traits_dev.items():
+            level += self.level
+            if level > 0:
+                wart = level*5
+                self.cechy_rozwiniecia[trait] = wart
+                self.cechy_rozwiniete[trait] = self.cechy[trait] + wart
+
+        #print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
 
     def generate_json_readable_output(self):
         postac_slownik = {}
@@ -380,7 +430,6 @@ class PostacFinito:
             from rasy.czlowiek import wlosy, oczy, wzrost
         if self.oczy == None:
             oczy_rand = random.randint(1, 19)
-            print(oczy)
             self.oczy = oczy[oczy_rand]
         if self.wlosy == None:
             wlosy_rand = random.randint(1, 19)
@@ -407,15 +456,17 @@ class PostacFinito:
                 for i in range(10):
                     a += random.randint(1, 10)
                 self.wiek = 15 + a
-            if self.race == 'Leśny elf' or "Wysoki elf":
+            if self.race == 'Leśny elf' or self.race =="Wysoki elf":
                 a = 0
                 for i in range(10):
                     a += random.randint(1, 10)
                 self.wiek = 30 + a
 
-    def unpack_profesji(self):
 
-        self.nazwa_profesji = self.nazwa_profesji[str(self.level)]
+    def unpack_profesji(self):
+        self.nazwa_profesji = {int(k): v for k, v in self.nazwa_profesji.items()}
+
+        self.nazwa_profesji = self.nazwa_profesji[self.level]
 
     def rany(self):
         if 'S' in self.cechy_rozwiniete:

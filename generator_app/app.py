@@ -3,11 +3,18 @@ from strona.forms import (CreationFormOne, CreationFormDvarf, CreationFormMan, C
                           CreationFormWoodElf, CreationFormHalfing, AppearanceForm)
 from generator import Postac, PostacTalentyIUmiejki, PostacFinito
 
+
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] ='dugsnaga'
+app.config["SESSION_PERMANENT"] = False
 
 @app.route('/one', methods=['GET', 'POST'])
 def formularz():
+    print(globals())
+    #czyszczenie zmiennych
+    print(globals()['session'])
+
     form = CreationFormOne()
     if form.validate_on_submit():
         postac = Postac(form)
@@ -30,7 +37,21 @@ def formularz():
             session['postac_dict'] = postac_dict
             return redirect(url_for('two'))
         if form.losuj_reszte.data:
-            session['postac_dict'] = postac_dict
+            #print(postac_dict)
+            postac2=PostacTalentyIUmiejki(postac_dict)
+            postac2.add_choosable_talents_randomly()
+            postac2.add_skills_randomly()
+            postac2.random_traits()
+            postac2.modify_traits_from_talents()
+            postac2.develop_traits()
+            postac_dict2=postac2.generate_json_readable_output()
+            postac3 = PostacFinito(postac_dict2)
+            postac3.random_eyes_hair_age_height()
+            postac3.unpack_profesji()
+            postac3.rany()
+            postac3.modify_skill_output()
+            postac_dict3 = postac3.generate_output()
+            session['postac_dict3'] = postac_dict3
             return redirect(url_for('wyniki'))
 
     return render_template('form_one.html', form=form)
@@ -108,7 +129,9 @@ def three():
 @app.route('/result', methods=['GET'])
 def wyniki():
     postac_dict3 = session.get('postac_dict3')
+    session.clear()
     #print(postac_dict3)
+
 
     return render_template('result.html', postac=postac_dict3)
 
