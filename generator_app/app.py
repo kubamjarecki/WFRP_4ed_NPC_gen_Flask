@@ -1,7 +1,7 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, send_file
 from strona.forms import (CreationFormOne, CreationFormDvarf, CreationFormMan, CreationFormHighElf,
-                          CreationFormWoodElf, CreationFormHalfing, AppearanceForm)
-from generator import Postac, PostacTalentyIUmiejki, PostacFinito
+                          CreationFormWoodElf, CreationFormHalfing, AppearanceForm, )
+from generator import Postac, PostacTalentyIUmiejki, PostacFinito, FileCreation
 
 
 app = Flask(__name__)
@@ -92,6 +92,7 @@ def two():
         postac.modify_traits_from_talents()
         postac.develop_traits()
         postac_dict2 = postac.generate_json_readable_output()
+        print(postac_dict2)
 
         if form.dalej.data:
             #przekazujemy wpisane wartości do strony trzeciej TBC
@@ -99,7 +100,13 @@ def two():
             return redirect(url_for('three'))
         if form.losuj_reszte.data:
             # przekazujemy wpisane wartości do strony wyników TBC
-            session['postac_dict2'] = postac_dict2
+            postac3 = PostacFinito(postac_dict2)
+            postac3.random_eyes_hair_age_height()
+            postac3.unpack_profesji()
+            postac3.modify_skill_output()
+            postac_dict3 = postac3.generate_output()
+            session['postac_dict3'] = postac_dict3
+
             return redirect(url_for('wyniki'))
 
     return render_template('form_two.html',
@@ -129,13 +136,25 @@ def three():
 @app.route('/result', methods=['GET'])
 def wyniki():
     postac_dict3 = session.get('postac_dict3')
-    session.clear()
     #print(postac_dict3)
 
 
     return render_template('result.html', postac=postac_dict3)
 
 
+@app.route('/download', methods=['GET'])
+def download_file():
+    postac_dict = session.get('postac_dict3')  # Pobieramy słownik z sesji
+    if not postac_dict:
+        return "Brak danych do pobrania", 404
+    # Nazwa pliku do pobrania
+    plik = FileCreation(postac_dict)
+    plik.format_output()
+    plik.output_to_file()
+    file_path = plik.nazwa_pliku
+
+    # Wysyłamy plik do pobrania
+    return send_file(file_path, as_attachment=True)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 

@@ -1,6 +1,7 @@
 import random
 import importlib
 import unicodedata
+import webbrowser
 
 
 
@@ -184,18 +185,17 @@ class Postac:
         if self.level >= 3:
             for element in self.wyp[3]:
                 self.equipment.append(element)
-                self.equipment.append(element)
         if self.level == 4:
             for element in self.wyp[4]:
                 self.equipment.append(element)
     def create_gold_str_and_append_to_character_equipment(self):
-        status = self.status[self.level]
-        if status == "Złoto":
+        self.status = self.status[self.level]
+        if self.status == "Złoto":
             majatek = "1 ZK"
-        if status == "Srebro":
+        if self.status == "Srebro":
             a = random.randint(1, 10)
             majatek = f"{a} SS"
-        if status == "Brąz":
+        if self.status == "Brąz":
             a = random.randint(2, 20)
             majatek = f"{a} BP"
         self.equipment.append(majatek)
@@ -209,7 +209,7 @@ class Postac:
 
         for attr, value in vars(self).items():
             if attr != "form":
-                print(f"{attr}: {value}")
+                #print(f"{attr}: {value}")
                 postac_slownik[attr] = value
 
         return postac_slownik
@@ -233,7 +233,9 @@ class PostacTalentyIUmiejki:
         self.klasa = postac_slownik['klasa']
         self.nazwa_profesji = postac_slownik['nazwa_profesji']
         self.talenty_lista_liczba = postac_slownik['talenty_lista_liczba']
-        print(f'Init {self.cechy}')
+        self.status = postac_slownik['status']
+
+        #print(f'Init {self.cechy}')
 
     def add_talents(self):
         for field in self.form.fields:
@@ -366,7 +368,7 @@ class PostacTalentyIUmiejki:
         if "Czujny" in self.talents:
             self.cechy["I"] = self.cechy["I"] + 5
 
-        print(f'talnety {self.cechy}')
+        #print(f'talnety {self.cechy}')
 
     def develop_traits(self):
         for key, value in self.cechy.items():
@@ -379,13 +381,13 @@ class PostacTalentyIUmiejki:
                 self.cechy_rozwiniecia[trait] = wart
                 self.cechy_rozwiniete[trait] = self.cechy[trait] + wart
 
-        print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
+        #print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
 
     def generate_json_readable_output(self):
         postac_slownik = {}
         for attr, value in vars(self).items():
             if attr != "form":
-                #print(f"{attr}: {value}")
+                print(f"{attr}: {value}")
                 postac_slownik[attr] = value
 
         return postac_slownik
@@ -411,6 +413,8 @@ class PostacFinito:
         self.wlosy = None
         self.oczy = None
         self.HP=None
+        self.status = postac_dict2['status']
+        self.level = postac_dict2['level']
         self.skills_output = {}
 
 
@@ -542,7 +546,125 @@ class PostacFinito:
         slownik['Klasa'] = self.klasa
         slownik['Profesja'] = self.nazwa_profesji
         slownik['Żywotność'] = self.HP
+        slownik['Poziom'] = self.level
+        slownik['Status'] = self.status
         return slownik
 
 
 
+class FileCreation:
+    def __init__(self, dict):
+        self.dict = dict
+        self.pierwszy_wiersz = ""
+        self.drugi_wiersz = ""
+        self.trzeci_wiersz = ""
+        self.czwarty_wiersza = ""
+
+    def format_output(self):
+
+        self.pierwszy_wiersz = "Imie: " + str(self.dict['Imię']) + "      " + "Rasa: " + str(
+            self.dict['Rasa']) + "     Płeć: " + str(self.dict['Płeć']) + "     " + "Profesja: " + str(
+            self.dict['Profesja']) + "      " + "Kariera: " + str(
+            self.dict['Ścieżka Kariery']) + " "
+        self.drugi_wiersz = "Status: " + self.dict['Status'] + "     " + "Poziom: " + str(
+            self.dict['Poziom']) + "    " + "Wzrost: " + str(self.dict['Wzrost']) + "    " + "Kolor Włosów: " + str(
+            self.dict['Włosy']) + "    " + "Kolor Oczu: " + str(self.dict['Oczy']) + "\n"
+
+        # nazwy tabeli cech 'WW', 'US', etc
+        self.trzeci_wiersz = ""
+
+        cechy_rozwiniete_dict = self.dict['Cechy aktualne']
+        cechy_bazowe_dict = self.dict['Cechy']
+        kolejnosc = ['WW', 'US', 'S', 'Wt', 'I', 'Zw', 'Zr', 'Int', 'SW', 'Ogd']
+        for key in kolejnosc:
+            c = 7 - len(key)
+            d = ""
+            while c > 0:
+                d = d + " "
+                c = c - 1
+            self.trzeci_wiersz = self.trzeci_wiersz + str(key) + d
+        # cechy bazowe
+        self.czwarty_wiersza = ""
+        for key in kolejnosc:
+            c = 5
+            d = ""
+            while c > 0:
+                d = d + " "
+                c = c - 1
+            self.czwarty_wiersza = self.czwarty_wiersza + str(cechy_bazowe_dict[key]) + d
+
+        # wartość rozwinięć
+        self.czwarty_wierszb = ""
+
+        for key in kolejnosc:
+            rozw = cechy_rozwiniete_dict[key] - cechy_bazowe_dict[key]
+            c = 5 - len(str(rozw))
+            d = ""
+            while c > 0:
+                d = d + " "
+                c = c - 1
+            self.czwarty_wierszb = self.czwarty_wierszb + str(rozw) + d + "  "
+
+        # wartośc końcowa
+        self.czwarty_wiersz = ""
+        for key in kolejnosc:
+            c = 5
+            d = ""
+            while c > 0:
+                d = d + " "
+                c = c - 1
+            self.czwarty_wiersz = self.czwarty_wiersz + str(cechy_rozwiniete_dict[key]) + d
+
+        self.trzeci_wiersz = self.trzeci_wiersz + "Żyw"
+        self.czwarty_wiersz = self.czwarty_wiersz + str(self.dict["Żywotność"])
+        piaty_wiersz = "UMJEJĘTNOŚCI"
+        self.listow_um = ""
+        umiejetnosci_z_wartosciami_powiekszonymi_o_cechy = {}
+        abilities = self.dict["Umiejętności"]
+
+        for key, val in sorted(abilities.items()):
+            self.listow_um = self.listow_um + str(key) + ":" + str(val) +  "\n"
+
+        talents = self.dict["Talenty"]
+        string_talentow = ""
+        a = 1
+        for el in talents:
+            if a % 5 != 0:
+                string_talentow = string_talentow + el + "; "
+
+            if a % 5 == 0:
+                string_talentow = string_talentow + el + ";\n"
+            a = a + 1
+
+        self.listow_tal = "TALENTY: " + string_talentow
+        a = 1
+        string_wyp = ""
+        equipment = self.dict["Wyposażenie"]
+        for el in equipment:
+            if a % 5 != 0:
+                string_wyp = string_wyp + el + "; "
+
+            if a % 5 == 0:
+                string_wyp = string_wyp + el + ";\n"
+            a = a + 1
+        self.listow_maj = "WYPOSAŻENIE: " + string_wyp
+    def output_to_file(self):
+        self.nazwa_pliku = str(self.dict["Imię"]) + "_" + str(self.dict["Rasa"]) + "_" + str(self.dict['Profesja']) + ".txt"
+
+        with open(self.nazwa_pliku, "w") as file_object:
+            file_object.write(self.pierwszy_wiersz + "\n")
+            file_object.write(self.drugi_wiersz + "\n")
+            file_object.write(self.trzeci_wiersz + "\n")
+            file_object.write(self.czwarty_wiersza + "\n")
+            file_object.write(self.czwarty_wierszb + "\n")
+            file_object.write(self.czwarty_wiersz+ "\n")
+            file_object.write("\n")
+            file_object.write("UMIEJĘTNOŚCI: \n")
+            file_object.write(self.listow_um + "\n")
+            file_object.write(self.listow_tal + "\n" + "\n")
+            file_object.write(self.listow_maj + "\n")
+            file_object.write("\n \n \n")
+            #file_object.write(self.podpis)
+            # file_object.write("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n" + prawa_zastrz)
+
+        webbrowser.open(self.nazwa_pliku)

@@ -8,7 +8,8 @@
 <body>
 
 <div class="container">
-    <h1>Postać - {{ postac['Imię'] }}</h1>
+    <h1>{{ postac['Imię'] }}</h1>
+    <a href="{{ url_for('download_file') }}" class="btn btn-primary">Pobierz dane jako plik .txt</a>
 
     <!-- Sekcja z danymi podstawowymi -->
     <div class="section">
