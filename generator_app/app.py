@@ -11,9 +11,9 @@ app.config["SESSION_PERMANENT"] = False
 
 @app.route('/one', methods=['GET', 'POST'])
 def formularz():
-    print(globals())
+    #print(globals())
     #czyszczenie zmiennych
-    print(globals()['session'])
+    #print(globals()['session'])
 
     form = CreationFormOne()
     if form.validate_on_submit():

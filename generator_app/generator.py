@@ -86,9 +86,11 @@ class Postac:
         if self.race == "Człowiek":
             from rasy.czlowiek import losowanie_imienia, profesje, talentyx, cechy
 
-        self.cechy = cechy
+        for key, value in cechy.items():
+            self.cechy[key] = value
 
-        self.talenty_lista_liczba=talentyx
+        for element in talentyx:
+            self.talenty_lista_liczba.append(element)
 
         ################################
         ## losujemy imię ###############
@@ -207,7 +209,7 @@ class Postac:
 
         for attr, value in vars(self).items():
             if attr != "form":
-                #print(f"{attr}: {value}")
+                print(f"{attr}: {value}")
                 postac_slownik[attr] = value
 
         return postac_slownik
@@ -231,7 +233,7 @@ class PostacTalentyIUmiejki:
         self.klasa = postac_slownik['klasa']
         self.nazwa_profesji = postac_slownik['nazwa_profesji']
         self.talenty_lista_liczba = postac_slownik['talenty_lista_liczba']
-        #print(f'Init {self.skills}')
+        print(f'Init {self.cechy}')
 
     def add_talents(self):
         for field in self.form.fields:
@@ -258,6 +260,7 @@ class PostacTalentyIUmiejki:
                 self.skills[skill]=3
 
     def add_skills_randomly(self):
+        umiejki_list = []
         if self.race == "Wysoki elf":
             from rasy.wysoki_elf import umiejki
         if self.race == "Leśny elf":
@@ -269,12 +272,15 @@ class PostacTalentyIUmiejki:
         if self.race == "Człowiek":
             from rasy.czlowiek import umiejki
 
+        for el in umiejki:
+            umiejki_list.append(el)
+
 
         #umiejki 5
         a=3
         while a >= 0:
-            skill = random.choice(umiejki)
-            umiejki.remove(skill)
+            skill = random.choice(umiejki_list)
+            umiejki_list.remove(skill)
 
             if skill in self.skills:
                 self.skills[skill] += 5
@@ -284,8 +290,8 @@ class PostacTalentyIUmiejki:
 
         #umiejki 3
         while a >= 0:
-            rand = random.randint(0, len(umiejki))
-            skill = umiejki.pop(rand)
+            rand = random.randint(0, len(umiejki_list))
+            skill = umiejki_list.pop(rand)
             if skill in self.skill:
                 self.skills[skill] += 5
             else:
@@ -296,17 +302,19 @@ class PostacTalentyIUmiejki:
 
     def random_traits(self):
         rzuty = []
+        #print(rzuty)
         a = 10
         while a > 0:
             b = random.randint(1, 10) + random.randint(1, 10)
             rzuty.append(b)
             a = a - 1
 
-
+        #print(rzuty)
         rzuty.sort()
         rzuty.reverse()
+        #print(rzuty)
 
-
+        #print(f'przed random{self.cechy}')
 
         for cecha in self.waga:
             rzut = rzuty.pop(0)
@@ -358,7 +366,7 @@ class PostacTalentyIUmiejki:
         if "Czujny" in self.talents:
             self.cechy["I"] = self.cechy["I"] + 5
 
-        #print(f'talnety {self.cechy}')
+        print(f'talnety {self.cechy}')
 
     def develop_traits(self):
         for key, value in self.cechy.items():
@@ -371,7 +379,7 @@ class PostacTalentyIUmiejki:
                 self.cechy_rozwiniecia[trait] = wart
                 self.cechy_rozwiniete[trait] = self.cechy[trait] + wart
 
-        #print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
+        print(f'develop traits{self.cechy} rozwinięcia {self.cechy_rozwiniecia}')
 
     def generate_json_readable_output(self):
         postac_slownik = {}
