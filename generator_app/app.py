@@ -124,7 +124,9 @@ def three():
         postac.random_eyes_hair_age_height()
         postac.unpack_profesji()
         postac.rany()
+
         postac.modify_skill_output()
+
         output = postac.generate_output()
 
         session['postac_dict3'] = output
