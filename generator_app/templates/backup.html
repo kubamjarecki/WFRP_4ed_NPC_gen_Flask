@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <title>Wygląd Postaci</title>
+    <style>
+        /* Ustawienie elementów RadioField w jednej linii */
+        .radio-group {
+            display: flex;
+            gap: 20px; /* Odstępy między grupami pól */
+            margin-bottom: 20px; /* Odstęp między sekcjami */
+        }
+
+        .radio-item {
+            display: flex;
+            flex-direction: column; /* Ustawienie opcji w pionie */
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ustawienia Wyglądu Postaci</h1>
+
+    <form method="POST" action="{{ url_for('two') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Kolor włosów -->
+        <h3>{{ form.wlosy.label }}</h3>
+        <div class="radio-group">
+            {% for subfield in form.wlosy %}
+                <div class="radio-item">
+                    {{ subfield() }}
+                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Kolor oczu -->
+        <h3>{{ form.oczy.label }}</h3>
+        <div class="radio-group">
+            {% for subfield in form.oczy %}
+                <div class="radio-item">
+                    {{ subfield() }}
+                    <label for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Wzrost -->
+        <h3>{{ form.wzrost.label }}</h3>
+        {{ form.wzrost() }}
+
+        <!-- Wzrost -->
+        <h3>{{ form.wiek.label }}</h3>
+        {{ form.wiek() }}
+        <!-- Przycisk Finito -->
+        <div>
+            {{ form.finito() }}
+        </div>
+
+    </form>
+</body>
+</html>

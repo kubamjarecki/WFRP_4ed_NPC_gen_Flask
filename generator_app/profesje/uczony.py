@@ -11,7 +11,7 @@ nazwa_profesji = {
 }
 status = {
     0 : "Brąz",
-    1 : "Brąz ",
+    1 : "Brąz",
     2 : "Srebro",
     3 : "Srebro",
     4 : "Złoto"
