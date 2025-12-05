@@ -14,11 +14,11 @@ rozwiniecia_cech = {
 waga = ["WW", "Wt", "Zw", "I", "S", "Int", "Ogd", "SW", "US", "Zr"]
 
 nazwa_profesji = {
-    0 : "Jeździec",
-    1 : "Jeździec",
-    2 : "Kawalerzysta",
-    3 : "Sierżant Kawalerii",
-    4 : "Oficer Kawalerii"
+    0 : "Stróż",
+    1 : "Stróż",
+    2 : "Ochroniarz",
+    3 : "Gwardzista",
+    4 : "Oficer Gwardii"
 }
 status = {
     0 : "Srebro",
